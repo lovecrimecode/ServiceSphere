@@ -1,0 +1,6 @@
+@ServiceSphere.API_HostAddress = http://localhost:5056
+
+GET {{ServiceSphere.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
