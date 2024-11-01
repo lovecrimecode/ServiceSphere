@@ -1,4 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using ServiceSphere.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ServiceSphereDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -16,7 +22,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseRouting();
 // Enable serving static files from wwwroot
 app.UseStaticFiles(); // Esta línea permite servir archivos estáticos
 
