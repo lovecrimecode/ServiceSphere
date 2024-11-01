@@ -2,15 +2,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceSphere.Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class HomeController : ControllerBase
+    public class HomeController : Controller
     {
-        // GET: api/home
-        [HttpGet]
-        public ActionResult<string> Get()
+        // GET: /Home/Index
+        public IActionResult Index()
         {
-            return "Welcome to the ServiceSphere API!";
+            return View();
+        }
+        public IActionResult Welcome()
+        {
+            return View();
         }
     }
 }

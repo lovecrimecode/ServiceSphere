@@ -11,7 +11,7 @@ using ServiceSphere.Infrastructure.Data;
 namespace ServiceSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(ServiceSphereDbContext))]
-    [Migration("20241101052052_InitialCreate")]
+    [Migration("20241101192326_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
