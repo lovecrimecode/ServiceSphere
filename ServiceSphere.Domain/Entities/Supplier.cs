@@ -8,7 +8,7 @@ namespace ServiceSphere.Domain.Entities
 {
     public class Supplier
     {
-        public int SupplierId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Contact { get; set; }
 

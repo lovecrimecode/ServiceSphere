@@ -13,6 +13,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceSphere.Application\ServiceSphere.Application.csproj" />
+    <ProjectReference Include="..\ServiceSphere.Domain\ServiceSphere.Domain.csproj" />
   </ItemGroup>
 
 </Project>

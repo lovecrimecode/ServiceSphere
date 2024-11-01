@@ -13,7 +13,7 @@ namespace ServiceSphere.Domain.Entities
         public bool IsAttending { get; set; }
 
         // Relationships
-        public int EventId { get; set; }
+        public int Id { get; set; }
         public Event Event { get; set; }
     }
 

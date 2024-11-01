@@ -24,16 +24,6 @@ namespace ServiceSphere.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Event>()
-                .HasMany(e => e.Guests)
-                .WithOne(g => g.Event)
-                .HasForeignKey(g => g.EventId);
-
-            modelBuilder.Entity<Service>()
-                .HasMany(s => s.Suppliers)
-                .WithOne()
-                .HasForeignKey(v => v.SupplierId);
-
             base.OnModelCreating(modelBuilder);
         }
     }
