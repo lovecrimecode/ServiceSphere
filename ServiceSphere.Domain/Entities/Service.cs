@@ -11,6 +11,7 @@ namespace ServiceSphere.Domain.Entities
         public int ServiceId { get; set; }
         public string Name { get; set; }
         public decimal Cost { get; set; }
+        public string Description { get; set; }
 
         // Relationships
         public List<Supplier> Suppliers { get; set; }

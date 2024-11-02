@@ -1,0 +1,18 @@
+﻿<!-- ServiceSphere.Web/Views/Supplier/Create.cshtml -->
+@model ServiceSphere.Domain.Entities.Supplier
+
+<h1>Crear Proveedor</h1>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="Contact"></label>
+        <input asp-for="Contact" />
+        <span asp-validation-for="Contact"></span>
+    </div>
+    <button type="submit">Crear</button>
+</form>

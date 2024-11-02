@@ -1,0 +1,28 @@
+﻿<!-- ServiceSphere.Web/Views/Supplier/Index.cshtml -->
+@model IEnumerable<ServiceSphere.Domain.Entities.Supplier>
+
+<h1>Proveedores</h1>
+<a asp-action="Create">Crear Proveedor</a>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Contacto</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var supplier in Model)
+        {
+            <tr>
+                <td>@supplier.Name</td>
+                <td>@supplier.Contact</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@supplier.Id">Detalles</a>
+                    <a asp-action="Edit" asp-route-id="@supplier.Id">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@supplier.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

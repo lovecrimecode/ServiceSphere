@@ -1,56 +1,46 @@
-﻿using ServiceSphere.Infrastructure.Data;
-using ServiceSphere.Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using ServiceSphere.Domain.Entities;
 
-namespace ServiceSphere.Application
+namespace ServiceSphere.Application.Services
 {
+
     public class EventService
     {
-        private readonly ServiceSphereDbContext _context;
+        private readonly HttpClient _httpClient;
 
-        public EventService(ServiceSphereDbContext context)
+        public EventService(HttpClient httpClient)
         {
-            _context = context;
+            _httpClient = httpClient;
         }
 
-        public async Task<Event> CreateEventAsync(Event newEvent) {
-            _context.Events.Add(newEvent);
-            await _context.SaveChangesAsync();
-            return newEvent;
+        public async Task<IEnumerable<Event>> GetEventsAsync()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Event>>("api/events");
         }
 
         public async Task<Event> GetEventByIdAsync(int id)
         {
-            return await _context.Events.FindAsync(id);
+            return await _httpClient.GetFromJsonAsync<Event>($"api/events/{id}");
         }
 
-        public async Task<List<Event>> GetEventsAsync()
+        public async Task CreateEventAsync(Event newEvent)
         {
-            return await _context.Events.Include(e => e.Guests).ToListAsync();
+            var response = await _httpClient.PostAsJsonAsync("api/events", newEvent);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task UpdateEventAsync(Event updatedEvent)
         {
-            _context.Events.Update(updatedEvent);
-            await _context.SaveChangesAsync();
+            var response = await _httpClient.PutAsJsonAsync($"api/events/{updatedEvent.Id}", updatedEvent);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteEventAsync(int id)
         {
-            var eventToDelete = await _context.Events.FindAsync(id);
-            if (eventToDelete != null)
-            {
-                _context.Events.Remove(eventToDelete);
-                await _context.SaveChangesAsync();
-            }
-        }
-       
-        public async Task GenerateBudgetReportAsync(int Id)
-        {
-            // Placeholder for future asynchronous logic
-            await Task.CompletedTask;
+            var response = await _httpClient.DeleteAsync($"api/events/{id}");
+            response.EnsureSuccessStatusCode();
         }
     }
 }

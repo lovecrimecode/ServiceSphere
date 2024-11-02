@@ -1,0 +1,11 @@
+﻿@model ServiceSphere.Domain.Entities.Service
+
+<h1>Eliminar Servicio</h1>
+
+<p>¿Está seguro de que desea eliminar el servicio: <strong>@Model.Name</strong>?</p>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="ServiceId" />
+    <button type="submit">Eliminar</button>
+    <a asp-action="Index">Cancelar</a>
+</form>

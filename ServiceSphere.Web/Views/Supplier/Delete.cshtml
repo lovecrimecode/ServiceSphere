@@ -1,0 +1,12 @@
+﻿<!-- ServiceSphere.Web/Views/Supplier/Delete.cshtml -->
+@model ServiceSphere.Domain.Entities.Supplier
+
+<h1>Eliminar Proveedor</h1>
+
+<p>¿Está seguro de que desea eliminar el proveedor: <strong>@Model.Name</strong>?</p>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Eliminar</button>
+    <a asp-action="Index">Cancelar</a>
+</form>

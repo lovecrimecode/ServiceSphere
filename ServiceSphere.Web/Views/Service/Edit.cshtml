@@ -1,0 +1,18 @@
+﻿@model ServiceSphere.Domain.Entities.Service
+
+<h1>Editar Servicio</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="ServiceId" />
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description"></textarea>
+        <span asp-validation-for="Description"></span>
+    </div>
+    <button type="submit">Actualizar</button>
+</form>
