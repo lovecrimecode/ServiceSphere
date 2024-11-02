@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ServiceSphere.Domain;
 using ServiceSphere.Domain.Entities;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using ServiceSphere.Infrastructure.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace ServiceSphere.API.Controllers
+namespace ServiceSphere.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -26,70 +25,52 @@ namespace ServiceSphere.API.Controllers
             return await _context.Services.ToListAsync();
         }
 
-/*        // GET: api/Services/5
+        // GET: api/Services/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Event>> GetService(int id)
+        public async Task<ActionResult<Service>> GetService(int id)
         {
-            var serviceItem = await _context.Services.FindAsync(id);
-
-            if (serviceItem == null)
-            {
+            var service = await _context.Services.FindAsync(id);
+            if (service == null)
                 return NotFound();
-            }
-            return serviceItem;
-        }*/
 
-        // POST: api/services
+            return service;
+        }
+
+        // POST: api/Services
         [HttpPost]
-        public async Task<ActionResult<Service>> CreateService(Service serviceItem)
+        public async Task<ActionResult<Service>> CreateService(Service service)
         {
-            _context.Services.Add(serviceItem);
+            _context.Services.Add(service);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetServices), new { id = serviceItem.ServiceId }, serviceItem);
-        } //ARREGALR A GETSERVICE (nameof(GetService)
+            return CreatedAtAction(nameof(GetService), new { id = service.ServiceId }, service);
+        }
 
-        // PUT: api/services/5
+        // PUT: api/Services/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateService(int id, Service serviceItem)
+        public async Task<IActionResult> UpdateService(int id, Service service)
         {
-            if (id != serviceItem.ServiceId)
+            if (id != service.ServiceId)
                 return BadRequest();
 
-            _context.Entry(serviceItem).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ServiceExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
+            _context.Entry(service).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        // DELETE: api/services/5
+        // DELETE: api/Services/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteService(int id)
         {
-            var serviceItem = await _context.Services.FindAsync(id);
-            if (serviceItem == null)
+            var service = await _context.Services.FindAsync(id);
+            if (service == null)
                 return NotFound();
 
-            _context.Services.Remove(serviceItem);
+            _context.Services.Remove(service);
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool ServiceExists(int id)
-        {
-            return _context.Services.Any(e => e.ServiceId == id);
         }
     }
 }

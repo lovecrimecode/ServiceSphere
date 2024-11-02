@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ServiceSphere.Domain;
 using ServiceSphere.Domain.Entities;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using ServiceSphere.Infrastructure.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace ServiceSphere.API.Controllers
+namespace ServiceSphere.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -19,77 +18,54 @@ namespace ServiceSphere.API.Controllers
             _context = context;
         }
 
-        // GET: api/Guests
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Guest>>> GetGuests()
         {
             return await _context.Guests.ToListAsync();
         }
 
-        /*        // GET: api/Guests/5
-                [HttpGet("{id}")]
-                public async Task<ActionResult<Event>> GetGuest(int id)
-                {
-                    var guestItem = await _context.Guests.FindAsync(id);
-
-                    if (guestItem == null)
-                    {
-                        return NotFound();
-                    }
-                    return guestItem;
-                }*/
-
-        // POST: api/guests
-        [HttpPost]
-        public async Task<ActionResult<Guest>> CreateGuest(Guest guestItem)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Guest>> GetGuest(int id)
         {
-            _context.Guests.Add(guestItem);
+            var guest = await _context.Guests.FindAsync(id);
+            if (guest == null)
+                return NotFound();
+
+            return guest;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Guest>> CreateGuest(Guest guest)
+        {
+            _context.Guests.Add(guest);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetGuests), new { id = guestItem.GuestId }, guestItem);
-        } //ARREGALR A GETSERVICE (nameof(GetGuest)
+            return CreatedAtAction(nameof(GetGuest), new { id = guest.Id }, guest);
+        }
 
-        // PUT: api/guests/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGuest(int id, Guest guestItem)
+        public async Task<IActionResult> UpdateGuest(int id, Guest guest)
         {
-            if (id != guestItem.GuestId)
+            if (id != guest.Id)
                 return BadRequest();
 
-            _context.Entry(guestItem).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GuestExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
+            _context.Entry(guest).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        // DELETE: api/guests/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGuest(int id)
         {
-            var guestItem = await _context.Guests.FindAsync(id);
-            if (guestItem == null)
+            var guest = await _context.Guests.FindAsync(id);
+            if (guest == null)
                 return NotFound();
 
-            _context.Guests.Remove(guestItem);
+            _context.Guests.Remove(guest);
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool GuestExists(int id)
-        {
-            return _context.Guests.Any(e => e.GuestId == id);
         }
     }
 }
