@@ -4,7 +4,7 @@ using ServiceSphere.Domain;
 using ServiceSphere.Domain.Entities;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using ServiceSphere.Infrastructure.Data;
+using ServiceSphere.Infrastructure.Persistence.Context;
 
 namespace ServiceSphere.API.Controllers
 {

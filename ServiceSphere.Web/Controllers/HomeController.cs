@@ -1,4 +1,4 @@
-/*using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceSphere.Web.Controllers
 {
@@ -15,4 +15,3 @@ namespace ServiceSphere.Web.Controllers
         }
     }
 }
-*/

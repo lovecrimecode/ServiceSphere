@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ServiceSphere.Domain.Entities;
-using ServiceSphere.Infrastructure.Data;
+using ServiceSphere.Infrastructure.Persistence.Context;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

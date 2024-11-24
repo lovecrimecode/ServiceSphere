@@ -17,7 +17,22 @@ namespace ServiceSphere.Application.Services
 
         public async Task<IEnumerable<Event>> GetEventsAsync()
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<Event>>("api/events");
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<IEnumerable<Event>>("api/events");
+            }
+            catch (HttpRequestException ex)
+            {
+                // Log the exception (you can use a logging framework)
+                Console.WriteLine($"Request error: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (you can use a logging framework)
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+                throw;
+            }
         }
 
         public async Task<Event> GetEventByIdAsync(int id)

@@ -1,10 +1,20 @@
 using Microsoft.EntityFrameworkCore;
-using ServiceSphere.Infrastructure.Data;
+using ServiceSphere.Infrastructure.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ServiceSphereDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -27,11 +37,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "api/events",
+        defaults: new { controller = "Events", action = "GetEvents" });
+});
+
+
 app.UseCors("AllowWebApp");
 
 app.UseHttpsRedirection();
 app.UseRouting();
-// Enable serving static files from wwwroot
+app.UseCors("AllowAll");
 app.UseStaticFiles(); // Esta línea permite servir archivos estáticos
 
 app.UseAuthorization();

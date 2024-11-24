@@ -12,12 +12,14 @@ public class EventController : Controller
         _eventService = eventService;
     }
 
+    [HttpGet]
     public async Task<IActionResult> Index()
     {
         var events = await _eventService.GetEventsAsync();
         return View(events);
     }
 
+    [HttpGet("{id}")]
     public async Task<IActionResult> Details(int id)
     {
         var evento = await _eventService.GetEventByIdAsync(id);
@@ -25,12 +27,13 @@ public class EventController : Controller
         return View(evento);
     }
 
+    [HttpGet("create")]
     public IActionResult Create()
     {
         return View();
     }
 
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<IActionResult> Create(Event newEvent)
     {
         if (!ModelState.IsValid)
@@ -40,6 +43,7 @@ public class EventController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet("edit/{id}")]
     public async Task<IActionResult> Edit(int id)
     {
         var evento = await _eventService.GetEventByIdAsync(id);
@@ -47,7 +51,7 @@ public class EventController : Controller
         return View(evento);
     }
 
-    [HttpPost]
+    [HttpPost("edit/{id}")]
     public async Task<IActionResult> Edit(Event updatedEvent)
     {
         if (!ModelState.IsValid)
@@ -57,6 +61,7 @@ public class EventController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet("delete/{id}")]
     public async Task<IActionResult> Delete(int id)
     {
         var evento = await _eventService.GetEventByIdAsync(id);
@@ -64,7 +69,7 @@ public class EventController : Controller
         return View(evento);
     }
 
-    [HttpPost, ActionName("Delete")]
+    [HttpPost("delete/{id}")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         await _eventService.DeleteEventAsync(id);

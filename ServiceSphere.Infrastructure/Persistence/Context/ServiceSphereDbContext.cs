@@ -8,7 +8,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceSphere.Infrastructure.Data
+namespace ServiceSphere.Infrastructure.Persistence.Context
 {
     public class ServiceSphereDbContext : DbContext
     {

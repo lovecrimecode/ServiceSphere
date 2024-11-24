@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServiceSphere.Domain.Interfaces;
-using ServiceSphere.Infrastructure.Data;
+using ServiceSphere.Infrastructure.Persistence.Context;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
