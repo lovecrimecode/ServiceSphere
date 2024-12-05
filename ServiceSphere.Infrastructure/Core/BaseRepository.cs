@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ServiceSphere.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ServiceSphere.Infrastructure.Core
 {
-public class BaseRepository<T> where T : class
+    public class BaseRepository<T> : IRepository<T> where T : class
     {
         protected readonly DbContext _context;
         private readonly DbSet<T> _dbSet;
@@ -34,17 +35,20 @@ public class BaseRepository<T> where T : class
             await _context.SaveChangesAsync();
         }
 
-        public void Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(T entity)
+        public async Task DeleteAsync(int id)
         {
-            _dbSet.Remove(entity);
-            _context.SaveChanges();
+            var entity = await _dbSet.FindAsync(id);
+            if (entity != null)
+            {
+                _dbSet.Remove(entity);
+                await _context.SaveChangesAsync();
+            }
         }
     }
-
 }

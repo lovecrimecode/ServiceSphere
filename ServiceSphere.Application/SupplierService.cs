@@ -1,46 +1,46 @@
 ﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 using ServiceSphere.Domain.Entities;
+using ServiceSphere.Domain.Interfaces;
 
 namespace ServiceSphere.Application.Services
 {
     public class SupplierService
     {
-        private readonly HttpClient _httpClient;
+        private readonly ISupplierRepository _supplierRepository;
 
-        public SupplierService(HttpClient httpClient)
+        public SupplierService(ISupplierRepository supplierRepository)
         {
-            _httpClient = httpClient;
+            _supplierRepository = supplierRepository;
         }
 
-        public async Task<List<Supplier>> GetSuppliersAsync()
+        public async Task<IEnumerable<Supplier>> GetAllSuppliersAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<Supplier>>("api/suppliers");
+            return await _supplierRepository.GetAllAsync();
         }
 
         public async Task<Supplier> GetSupplierByIdAsync(int id)
         {
-            return await _httpClient.GetFromJsonAsync<Supplier>($"api/suppliers/{id}");
+            return await _supplierRepository.GetByIdAsync(id);
+            // Manejo de excepciones puede ser agregado aquí.
         }
 
-        public async Task CreateSupplierAsync(Supplier supplier)
+        public async Task AddSupplierAsync(Supplier supplierItem)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/suppliers", supplier);
-            response.EnsureSuccessStatusCode();
+            await _supplierRepository.AddAsync(supplierItem);
+            // Manejo de excepciones puede ser agregado aquí.
         }
 
-        public async Task UpdateSupplierAsync(Supplier supplier)
+        public async Task UpdateSupplierAsync(Supplier supplierItem)
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/suppliers/{supplier.Id}", supplier);
-            response.EnsureSuccessStatusCode();
+            await _supplierRepository.UpdateAsync(supplierItem);
+            // Manejo de excepciones puede ser agregado aquí.
         }
 
         public async Task DeleteSupplierAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"api/suppliers/{id}");
-            response.EnsureSuccessStatusCode();
+            await _supplierRepository.DeleteAsync(id);
+            // Manejo de excepciones puede ser agregado aquí.
         }
     }
 }

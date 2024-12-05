@@ -5,31 +5,31 @@ using ServiceSphere.Infrastructure.Persistence.Context;
 
 namespace ServiceSphere.Infrastructure.Repositories
 {
-    public class GuestRepository : BaseRepository<Guest>, IGuestRepository
+    public class OrganizerRepository : BaseRepository<Organizer>, IOrganizerRepository
     {
-        public GuestRepository(ServiceSphereDbContext context) : base(context) { }
+        public OrganizerRepository(ServiceSphereDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Guest>> GetAllGuestsAsync()
+        public async Task<IEnumerable<Organizer>> GetAllOrganizersAsync()
         {
             return await GetAllAsync(); // Utiliza el método genérico.
         }
 
-        public async Task<Guest> GetGuestByIdAsync(int id)
+        public async Task<Organizer> GetOrganizerByIdAsync(int id)
         {
             return await GetByIdAsync(id); // Utiliza el método genérico.
         }
 
-        public async Task AddGuestAsync(Guest organizerItem)
+        public async Task AddOrganizerAsync(Organizer organizerItem)
         {
             await AddAsync(organizerItem); // Utiliza el método genérico.
         }
 
-        public void UpdateGuest(Guest organizerItem)
+        public void UpdateOrganizer(Organizer organizerItem)
         {
             UpdateAsync(organizerItem); // Utiliza el método genérico.
         }
 
-        public void DeleteGuest(int id)
+        public void DeleteOrganizer(int id)
         {
             DeleteAsync(id); // Utiliza el método genérico.
         }

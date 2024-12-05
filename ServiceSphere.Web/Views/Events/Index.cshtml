@@ -18,8 +18,8 @@
                 <td>@evento.Location</td>
                 <td>@evento.Date.ToShortDateString()</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@evento.Id">Editar</a>
-                    <a asp-action="Delete" asp-route-id="@evento.Id">Eliminar</a>
+                    <a asp-action="Edit" asp-route-id="@evento.EventId">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@evento.EventId">Eliminar</a>
                 </td>
             </tr>
         }

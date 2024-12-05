@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ServiceSphere.Domain.Entities;
 
-namespace ServiceSphere.Domain.Interfaces
+namespace ServiceSphere.Infrastructure.Interfaces
 {
     public interface IRepository<T> where T : class
     {
@@ -16,11 +16,4 @@ namespace ServiceSphere.Domain.Interfaces
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
     }
-
-    //Creacion de una interfaz para cada clase
-    public interface IEventRepository : IRepository<Event> { }
-    public interface IGuestRepository : IRepository<Guest> { }
-    public interface IServiceRepository : IRepository<Service> { }
-    public interface ISupplierRepository : IRepository<Supplier> { }
-
 }

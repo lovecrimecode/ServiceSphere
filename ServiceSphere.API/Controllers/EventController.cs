@@ -45,14 +45,14 @@ namespace ServiceSphere.API.Controllers
             _context.Events.Add(eventItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetEvent), new { id = eventItem.Id }, eventItem);
+            return CreatedAtAction(nameof(GetEvent), new { id = eventItem.EventId }, eventItem);
         }
 
         // PUT: api/events/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEvent(int id, Event eventItem)
         {
-            if (id != eventItem.Id)
+            if (id != eventItem.EventId)
                 return BadRequest();
 
             _context.Entry(eventItem).State = EntityState.Modified;
@@ -88,7 +88,7 @@ namespace ServiceSphere.API.Controllers
 
         private bool EventExists(int id)
         {
-            return _context.Events.Any(e => e.Id == id);
+            return _context.Events.Any(e => e.EventId == id);
         }
     }
 }

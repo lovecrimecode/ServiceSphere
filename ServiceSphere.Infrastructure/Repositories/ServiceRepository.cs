@@ -3,33 +3,33 @@ using ServiceSphere.Infrastructure.Core;
 using ServiceSphere.Infrastructure.Interfaces;
 using ServiceSphere.Infrastructure.Persistence.Context;
 
-namespace EventSphere.Infrastructure.Repositories
+namespace ServiceSphere.Infrastructure.Repositories
 {
-    public class EventRepository : BaseRepository<Event>, IEventRepository
+    public class ServiceRepository : BaseRepository<Service>, IServiceRepository
     {
-        public EventRepository(ServiceSphereDbContext context) : base(context) { }
+        public ServiceRepository(ServiceSphereDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Event>> GetAllEventsAsync()
+        public async Task<IEnumerable<Service>> GetAllServicesAsync()
         {
             return await GetAllAsync(); // Utiliza el método genérico.
         }
 
-        public async Task<Event> GetEventByIdAsync(int id)
+        public async Task<Service> GetServiceByIdAsync(int id)
         {
             return await GetByIdAsync(id); // Utiliza el método genérico.
         }
 
-        public async Task AddEventAsync(Event serviceItem)
+        public async Task AddServiceAsync(Service serviceItem)
         {
             await AddAsync(serviceItem); // Utiliza el método genérico.
         }
 
-        public void UpdateEvent(Event serviceItem)
+        public void UpdateService(Service serviceItem)
         {
             UpdateAsync(serviceItem); // Utiliza el método genérico.
         }
 
-        public void DeleteEvent(int id)
+        public void DeleteService(int id)
         {
             DeleteAsync(id); // Utiliza el método genérico.
         }

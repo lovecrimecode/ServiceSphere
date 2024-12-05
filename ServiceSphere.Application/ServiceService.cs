@@ -1,45 +1,49 @@
-﻿using System.Net.Http;
-using System.Net.Http.Json;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ServiceSphere.Domain.Entities;
+using ServiceSphere.Domain.Interfaces;
+using ServiceSphere.Infrastructure.Repositories;
 
 namespace ServiceSphere.Application.Services
 {
     public class ServiceService
     {
-        private readonly HttpClient _httpClient;
+        private readonly IServiceRepository _serviceRepository;
 
-        public ServiceService(HttpClient httpClient)
+        public ServiceService(IServiceRepository serviceRepository)
         {
-            _httpClient = httpClient;
+            _serviceRepository = serviceRepository;
         }
 
-        public async Task<IEnumerable<Service>> GetServicesAsync()
+        public async Task<IEnumerable<Service>> GetAllServicesAsync()
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<Service>>("api/services");
+            return await _serviceRepository.GetAllAsync();
         }
 
         public async Task<Service> GetServiceByIdAsync(int id)
         {
-            return await _httpClient.GetFromJsonAsync<Service>($"api/services/{id}");
+            return await _serviceRepository.GetByIdAsync(id);
+            // Manejo de excepciones puede ser agregado aquí.
         }
 
-        public async Task CreateServiceAsync(Service newService)
+        public async Task AddServiceAsync(Service serviceItem)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/services", newService);
-            response.EnsureSuccessStatusCode();
+            await _serviceRepository.AddAsync(serviceItem);
+            // Manejo de excepciones puede ser agregado aquí.
         }
 
-        public async Task UpdateServiceAsync(Service updatedService)
+        public async Task UpdateServiceAsync(Service serviceItem)
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/services/{updatedService.ServiceId}", updatedService);
-            response.EnsureSuccessStatusCode();
+            await _serviceRepository.UpdateAsync(serviceItem);
+            // Manejo de excepciones puede ser agregado aquí.
         }
 
         public async Task DeleteServiceAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"api/services/{id}");
-            response.EnsureSuccessStatusCode();
+            await _serviceRepository.DeleteAsync(id);
+            // Manejo de excepciones puede ser agregado aquí.
         }
+    }
+}
     }
 }

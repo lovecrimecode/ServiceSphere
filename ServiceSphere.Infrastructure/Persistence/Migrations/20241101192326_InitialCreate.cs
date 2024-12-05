@@ -73,7 +73,7 @@ namespace ServiceSphere.Infrastructure.Migrations
                         name: "FK_Guests_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
-                        principalColumn: "Id",
+                        principalColumn: "EventId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -91,7 +91,7 @@ namespace ServiceSphere.Infrastructure.Migrations
                         name: "FK_EventService_Events_EventsId",
                         column: x => x.EventsId,
                         principalTable: "Events",
-                        principalColumn: "Id",
+                        principalColumn: "EventId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EventService_Services_ServicesServiceId",
@@ -121,7 +121,7 @@ namespace ServiceSphere.Infrastructure.Migrations
                         name: "FK_ServiceSupplier_Suppliers_SuppliersId",
                         column: x => x.SuppliersId,
                         principalTable: "Suppliers",
-                        principalColumn: "Id",
+                        principalColumn: "EventId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

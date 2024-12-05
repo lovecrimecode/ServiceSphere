@@ -43,14 +43,14 @@ namespace ServiceSphere.Api.Controllers
             _context.Suppliers.Add(supplier);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetSupplier), new { id = supplier.Id }, supplier);
+            return CreatedAtAction(nameof(GetSupplier), new { id = supplier.SupplierId }, supplier);
         }
 
         // PUT: api/Suppliers/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSupplier(int id, Supplier supplier)
         {
-            if (id != supplier.Id)
+            if (id != supplier.SupplierId)
                 return BadRequest();
 
             _context.Entry(supplier).State = EntityState.Modified;

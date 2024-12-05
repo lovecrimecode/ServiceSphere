@@ -1,19 +1,15 @@
-﻿using ServiceSphere.Domain.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceSphere.Domain.Entities
+namespace ServiceSphere.Infrastructure.Models
 {
-    public class Supplier : BaseEntity
+    public class SupplierModel
     {
         public int SupplierId { get; set; }
         public string Name { get; set; }
         public string Contact { get; set; }
-
-        // Relationships
-        public ICollection<Service> Services { get; set; }
     }
 }

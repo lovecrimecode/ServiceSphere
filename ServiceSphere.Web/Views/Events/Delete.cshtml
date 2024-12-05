@@ -6,7 +6,7 @@
 <p>¿Está seguro de que desea eliminar el evento: <strong>@Model.Name</strong>?</p>
 
 <form asp-action="DeleteConfirmed" method="post">
-    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="EventId" />
     <button type="submit">Eliminar</button>
     <a asp-action="Index">Cancelar</a>
 </form>

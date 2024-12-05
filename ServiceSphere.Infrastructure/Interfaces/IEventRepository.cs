@@ -7,7 +7,6 @@ using ServiceSphere.Domain.Entities;
 
 namespace ServiceSphere.Infrastructure.Interfaces
 {
-
     public interface IEventRepository
     {
         Task<IEnumerable<Event>> GetAllEventsAsync();

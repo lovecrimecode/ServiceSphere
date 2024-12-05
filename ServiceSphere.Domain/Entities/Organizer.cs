@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace ServiceSphere.Domain.Entities
 {
-    public class Supplier : BaseEntity
+    public class Organizer : BaseEntity
     {
-        public int SupplierId { get; set; }
         public string Name { get; set; }
-        public string Contact { get; set; }
-
-        // Relationships
-        public ICollection<Service> Services { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public ICollection<Event> Events { get; set; }
     }
+
 }

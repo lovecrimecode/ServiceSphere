@@ -1,61 +1,46 @@
-﻿using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ServiceSphere.Domain.Entities;
+using ServiceSphere.Domain.Interfaces;
 
 namespace ServiceSphere.Application.Services
 {
 
     public class EventService
     {
-        private readonly HttpClient _httpClient;
+        private readonly IEventRepository _eventRepository;
 
-        public EventService(HttpClient httpClient)
+        public EventService(IEventRepository eventRepository)
         {
-            _httpClient = httpClient;
+            _eventRepository = eventRepository;
         }
 
-        public async Task<IEnumerable<Event>> GetEventsAsync()
+        public async Task<IEnumerable<Event>> GetAllEventsAsync()
         {
-            try
-            {
-                return await _httpClient.GetFromJsonAsync<IEnumerable<Event>>("api/events");
-            }
-            catch (HttpRequestException ex)
-            {
-                // Log the exception (you can use a logging framework)
-                Console.WriteLine($"Request error: {ex.Message}");
-                throw;
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (you can use a logging framework)
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                throw;
-            }
+            return await _eventRepository.GetAllAsync();
         }
 
         public async Task<Event> GetEventByIdAsync(int id)
         {
-            return await _httpClient.GetFromJsonAsync<Event>($"api/events/{id}");
+            return await _eventRepository.GetByIdAsync(id);
+            // Manejo de excepciones puede ser agregado aquí.
         }
 
-        public async Task CreateEventAsync(Event newEvent)
+        public async Task AddEventAsync(Event eventItem)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/events", newEvent);
-            response.EnsureSuccessStatusCode();
+            await _eventRepository.AddAsync(eventItem);
+            // Manejo de excepciones puede ser agregado aquí.
         }
 
-        public async Task UpdateEventAsync(Event updatedEvent)
+        public async Task UpdateEventAsync(Event eventItem)
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/events/{updatedEvent.Id}", updatedEvent);
-            response.EnsureSuccessStatusCode();
+            await _eventRepository.UpdateAsync(eventItem);
+            // Manejo de excepciones puede ser agregado aquí.
         }
 
         public async Task DeleteEventAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"api/events/{id}");
-            response.EnsureSuccessStatusCode();
+            await _eventRepository.DeleteAsync(id);
+            // Manejo de excepciones puede ser agregado aquí.
         }
     }
 }

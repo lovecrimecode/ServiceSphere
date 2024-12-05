@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace ServiceSphere.Infrastructure.Models
 {
-    public class EventModel
+    public class OrganizerModel
     {
-        public int EventId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime Date { get; set; }
-        public string Location { get; set; }
-        public decimal Budget { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
     }
 }

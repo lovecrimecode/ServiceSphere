@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceSphere.Domain.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,16 +7,18 @@ using System.Threading.Tasks;
 
 namespace ServiceSphere.Domain.Entities
 {
-    public class Event
+    public class Event : BaseEntity
     {
-        public int Id { get; set; }
+        public int EventId { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public string Location { get; set; }
         public decimal Budget { get; set; }
 
         // Relationships
-        public List<Guest> Guests { get; set; }
-        public List<Service> Services { get; set; }
+        public int OrganizerId { get; set; }
+        public Organizer Organizer { get; set; }
+        public ICollection<Guest> Guests { get; set; }
+        public ICollection<Service> Services { get; set; }
     }
 }

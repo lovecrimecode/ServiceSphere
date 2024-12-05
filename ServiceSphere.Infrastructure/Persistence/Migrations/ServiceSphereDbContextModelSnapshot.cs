@@ -34,7 +34,7 @@ namespace ServiceSphere.Infrastructure.Migrations
 
             modelBuilder.Entity("ServiceSphere.Domain.Entities.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EventId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -52,14 +52,14 @@ namespace ServiceSphere.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("EventId");
 
                     b.ToTable("Events");
                 });
 
             modelBuilder.Entity("ServiceSphere.Domain.Entities.Guest", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EventId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -76,7 +76,7 @@ namespace ServiceSphere.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("EventId");
 
                     b.HasIndex("EventId");
 
@@ -103,7 +103,7 @@ namespace ServiceSphere.Infrastructure.Migrations
 
             modelBuilder.Entity("ServiceSphere.Domain.Entities.Supplier", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EventId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -115,7 +115,7 @@ namespace ServiceSphere.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("EventId");
 
                     b.ToTable("Suppliers");
                 });
