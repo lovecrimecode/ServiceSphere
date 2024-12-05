@@ -14,7 +14,7 @@ public class ServiceController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var services = await _serviceService.GetServicesAsync();
+        var services = await _serviceService.GetAllServicesAsync();
         return View(services);
     }
 
@@ -31,14 +31,14 @@ public class ServiceController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Service newService)
+/*    public async Task<IActionResult> Create(Service newService)
     {
         if (!ModelState.IsValid)
             return View(newService);
 
         await _serviceService.CreateServiceAsync(newService);
         return RedirectToAction(nameof(Index));
-    }
+    }*/
 
     public async Task<IActionResult> Edit(int id)
     {

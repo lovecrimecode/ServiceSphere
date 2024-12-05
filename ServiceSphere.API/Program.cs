@@ -3,12 +3,14 @@ using ServiceSphere.Infrastructure.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuración de DbContext
 builder.Services.AddDbContext<ServiceSphereDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Configuración de CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
+    options.AddPolicy("AllowWebApp", builder =>
     {
         builder.AllowAnyOrigin()
                .AllowAnyMethod()
@@ -16,44 +18,35 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Add services to the container.
+// Agregar servicios al contenedor
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowWebApp",
-        builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-});
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuración del pipeline de solicitudes HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// **Orden correcto del middleware**
+app.UseHttpsRedirection();
+
+app.UseStaticFiles(); // Sirve archivos estáticos
+app.UseRouting(); // Habilita el enrutamiento
+
+app.UseCors("AllowWebApp"); // Configuración de CORS
+app.UseAuthorization(); // Autorización
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "api/events",
-        defaults: new { controller = "Events", action = "GetEvents" });
+        pattern: "api/{controller=Home}/{action=Index}/{id?}");
 });
-
-
-app.UseCors("AllowWebApp");
-
-app.UseHttpsRedirection();
-app.UseRouting();
-app.UseCors("AllowAll");
-app.UseStaticFiles(); // Esta línea permite servir archivos estáticos
-
-app.UseAuthorization();
 
 app.MapControllers();
 

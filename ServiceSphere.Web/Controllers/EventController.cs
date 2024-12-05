@@ -15,7 +15,7 @@ public class EventController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var events = await _eventService.GetEventsAsync();
+        var events = await _eventService.GetAllEventsAsync();
         return View(events);
     }
 
@@ -33,7 +33,7 @@ public class EventController : Controller
         return View();
     }
 
-    [HttpPost("create")]
+/*    [HttpPost("create")]
     public async Task<IActionResult> Create(Event newEvent)
     {
         if (!ModelState.IsValid)
@@ -41,7 +41,7 @@ public class EventController : Controller
 
         await _eventService.CreateEventAsync(newEvent);
         return RedirectToAction(nameof(Index));
-    }
+    }*/
 
     [HttpGet("edit/{id}")]
     public async Task<IActionResult> Edit(int id)

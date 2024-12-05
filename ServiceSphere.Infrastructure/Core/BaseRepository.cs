@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ServiceSphere.Infrastructure.Interfaces;
+using ServiceSphere.Domain.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;

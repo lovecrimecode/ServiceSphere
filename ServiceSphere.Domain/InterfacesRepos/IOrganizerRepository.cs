@@ -1,11 +1,12 @@
 ﻿using ServiceSphere.Domain.Entities;
+using ServiceSphere.Domain.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceSphere.Infrastructure.Interfaces
+namespace ServiceSphere.Domain.InterfacesRepos
 {
     public interface IOrganizerRepository : IRepository<Organizer>
     {

@@ -14,7 +14,7 @@ public class SupplierController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var suppliers = await _supplierService.GetSuppliersAsync();
+        var suppliers = await _supplierService.GetAllSuppliersAsync();
         return View(suppliers);
     }
 
@@ -31,14 +31,14 @@ public class SupplierController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Supplier newSupplier)
+/*    public async Task<IActionResult> Create(Supplier newSupplier)
     {
         if (!ModelState.IsValid)
             return View(newSupplier);
 
         await _supplierService.CreateSupplierAsync(newSupplier);
         return RedirectToAction(nameof(Index));
-    }
+    }*/
 
     public async Task<IActionResult> Edit(int id)
     {

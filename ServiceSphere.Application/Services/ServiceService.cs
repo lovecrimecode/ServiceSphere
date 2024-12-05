@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ServiceSphere.Domain.Entities;
-using ServiceSphere.Domain.Interfaces;
+using ServiceSphere.Domain.InterfacesRepos;
 using ServiceSphere.Infrastructure.Repositories;
 
 namespace ServiceSphere.Application.Services
@@ -43,7 +43,5 @@ namespace ServiceSphere.Application.Services
             await _serviceRepository.DeleteAsync(id);
             // Manejo de excepciones puede ser agregado aquí.
         }
-    }
-}
     }
 }

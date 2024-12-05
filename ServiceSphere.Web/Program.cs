@@ -4,6 +4,9 @@ using ServiceSphere.Application;
 using ServiceSphere.Infrastructure.Persistence.Context;
 using ServiceSphere.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
+using EventSphere.Infrastructure.Repositories;
+using ServiceSphere.Domain.InterfacesRepos;
+using ServiceSphere.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +32,16 @@ builder.Services.AddHttpClient<SupplierService>(client =>
 {
     client.BaseAddress = new Uri("https://localhost:7275/");
 });
+
+builder.Services.AddScoped<EventService>();
+builder.Services.AddScoped<SupplierService>();
+builder.Services.AddScoped<ServiceService>();
+
+
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+
 
 var app = builder.Build();
 

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using ServiceSphere.Domain.Entities;
-using ServiceSphere.Domain.Interfaces;
+using ServiceSphere.Domain.InterfacesRepos;
 
 namespace ServiceSphere.Application.Services
 {

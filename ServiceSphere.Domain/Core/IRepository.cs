@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ServiceSphere.Domain.Entities;
 
-namespace ServiceSphere.Infrastructure.Interfaces
+namespace ServiceSphere.Domain.Core
 {
     public interface IRepository<T> where T : class
     {
