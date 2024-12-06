@@ -72,13 +72,13 @@ namespace ServiceSphere.API.Controllers
 
             return NoContent();
         }
-
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteEvent(int id)
         {
-            var success = await _eventService.DeleteEventAsync(id);
-            if (!success) return NotFound("Event not found for deletion.");
+            var eventItem = await _eventService.GetEventByIdAsync(id);
+            if (eventItem == null) return NotFound("Event not found.");
 
+            await _eventService.DeleteEventAsync(id);
             return NoContent();
         }
     }

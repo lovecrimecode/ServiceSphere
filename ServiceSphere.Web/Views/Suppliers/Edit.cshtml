@@ -1,6 +1,6 @@
 ﻿@model ServiceSphere.Domain.Entities.Supplier
 
-<h1>Editar Proveedor</h1>
+<h1>Edit Supplier</h1>
 
 <form asp-action="Edit" method="post">
     <input type="hidden" asp-for="SupplierId" />
@@ -14,5 +14,5 @@
         <input asp-for="Contact" />
         <span asp-validation-for="Contact"></span>
     </div>
-    <button type="submit">Actualizar</button>
+    <button type="submit">Update</button>
 </form>

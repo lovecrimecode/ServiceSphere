@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<ServiceSphere.Domain.Entities.Service>
 
-<h1>Servicios</h1>
-<a asp-action="Create">Crear Servicio</a>
+<h1>Organizer</h1>
+<a asp-action="Create">Create Organizer</a>
 <table>
     <thead>
         <tr>
-            <th>Nombre</th>
+            <th>Name</th>
             <th>Descripción</th>
             <th>Acciones</th>
         </tr>
@@ -17,9 +17,9 @@
                 <td>@service.Name</td>
                 <td>@service.Description</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@service.ServiceId">Detalles</a>
-                    <a asp-action="Edit" asp-route-id="@service.ServiceId">Editar</a>
-                    <a asp-action="Delete" asp-route-id="@service.ServiceId">Eliminar</a>
+                    <a asp-action="Details" asp-route-id="@service.OrganizerId">Details</a>
+                    <a asp-action="Edit" asp-route-id="@service.OrganizerId">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@service.OrganizerId">Delete</a>
                 </td>
             </tr>
         }

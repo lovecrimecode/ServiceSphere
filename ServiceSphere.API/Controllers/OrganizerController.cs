@@ -53,14 +53,14 @@ namespace ServiceSphere.API.Controllers
                 return BadRequest("Invalid organizer data."); // Validación simple.
 
             organizer.Id = id; // Asignar el ID del organizador a actualizar.
-            await _organizerService.UpdateOrganizerAsync(organizer); // Actualizar organizador.
+            await _organizerService.UpdateOrganizerAsync(organizer); // Update organizador.
             return NoContent(); // Retorna 204 No Content.
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteOrganizer(int id)
         {
-            await _organizerService.DeleteOrganizerAsync(id); // Eliminar organizador.
+            await _organizerService.DeleteOrganizerAsync(id); // Delete organizador.
             return NoContent(); // Retorna 204 No Content.
         }
     }

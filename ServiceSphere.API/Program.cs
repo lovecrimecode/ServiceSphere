@@ -26,7 +26,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Agregar servicios al contenedor
+// Agregar Services al contenedor
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

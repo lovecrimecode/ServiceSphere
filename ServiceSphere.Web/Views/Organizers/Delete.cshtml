@@ -1,0 +1,15 @@
+﻿@model ServiceSphere.Infrastructure.Models.OrganizerModel
+
+<h1>Delete Organizer</h1>
+
+<div>
+    <h4>Are you sure you want to delete this organizer?</h4>
+    <h4>@Model.Name</h4>
+    <hr />
+
+    <form asp-action="Delete" method="post">
+        @Html.HiddenFor(m => m.Id)
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-controller="Organizers" asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

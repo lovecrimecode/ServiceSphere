@@ -1,29 +1,29 @@
-﻿@model ServiceSphere.Infrastructure.Models.EventModel
+﻿@model ServiceSphere.Infrastructure.Models.OrganizerModel
 
-<h1>Create Event</h1>
+<h1>Create Organizer</h1>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create">
     <div class="form-group">
         <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" required />
+        <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Date"></label>
-        <input asp-for="Date" type="date" class="form-control" required />
-        <span asp-validation-for="Date" class="text-danger"></span>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" type="date" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Location"></label>
-        <input asp-for="Location" class="form-control" required />
-        <span asp-validation-for="Location" class="text-danger"></span>
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Budget"></label>
-        <input asp-for="Budget" type="number" step="0.01" class="form-control" required />
+        <input asp-for="Budget" type="number" step="0.01" class="form-control" />
         <span asp-validation-for="Budget" class="text-danger"></span>
     </div>
 

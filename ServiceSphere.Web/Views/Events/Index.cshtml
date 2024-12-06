@@ -1,27 +1,47 @@
-﻿@model IEnumerable<ServiceSphere.Domain.Entities.Event>
+﻿@model IEnumerable<ServiceSphere.Infrastructure.Models.EventModel>
 
-<h1>Eventos</h1>
-<table>
+<h1>Events</h1>
+
+<p>
+    <a asp-controller="Events" asp-action="Create" class="btn btn-primary">Create New Event</a>
+</p>
+
+<table class="table">
     <thead>
         <tr>
-            <th>Nombre</th>
-            <th>Ubicación</th>
-            <th>Fecha</th>
-            <th>Acciones</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Budget</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var evento in Model)
+        @foreach (var eventItem in Model)
         {
             <tr>
-                <td>@evento.Name</td>
-                <td>@evento.Location</td>
-                <td>@evento.Date.ToShortDateString()</td>
+                <td>@eventItem.Name</td>
+                <td>@eventItem.Date.ToShortDateString()</td>
+                <td>@eventItem.Location</td>
+                <td>@eventItem.Budget.ToString("C")</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@evento.EventId">Editar</a>
-                    <a asp-action="Delete" asp-route-id="@evento.EventId">Eliminar</a>
+                    <!-- Action buttons -->
+                    <a asp-controller="Events" asp-action="Edit" asp-route-id="@eventItem.Id" class="btn btn-warning">Edit</a>
+                    <a asp-controller="Events" asp-action="Details" asp-route-id="@eventItem.Id" class="btn btn-info">Details</a>
+                    <!-- You might want to implement delete functionality -->
+                    <!-- Use JavaScript confirmation before delete -->
+                    <!-- Example: -->
+                    <!--
+                    @Html.ActionLink("Delete", "Delete", new { id = eventItem.Id }, new { onclick = "return confirm('Are you sure?');", @class = "btn btn-danger" })
+                    -->
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

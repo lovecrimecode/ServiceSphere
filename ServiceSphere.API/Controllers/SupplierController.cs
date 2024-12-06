@@ -53,14 +53,14 @@ namespace ServiceSphere.API.Controllers
                 return BadRequest("Invalid supplier data."); // Validación simple.
 
             supplier.Id = id; // Asignar el ID del proveedor a actualizar.
-            await _supplierService.UpdateSupplierAsync(supplier); // Actualizar proveedor.
+            await _supplierService.UpdateSupplierAsync(supplier); // Update proveedor.
             return NoContent(); // Retorna 204 No Content.
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteSupplier(int id)
         {
-            await _supplierService.DeleteSupplierAsync(id); // Eliminar proveedor.
+            await _supplierService.DeleteSupplierAsync(id); // Delete proveedor.
             return NoContent(); // Retorna 204 No Content.
         }
     }

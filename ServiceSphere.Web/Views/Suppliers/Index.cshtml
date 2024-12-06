@@ -1,14 +1,13 @@
 ﻿<!-- ServiceSphere.Web/Views/Supplier/Index.cshtml -->
 @model IEnumerable<ServiceSphere.Domain.Entities.Supplier>
 
-<h1>Proveedores</h1>
-<a asp-action="Create">Crear Proveedor</a>
+<h1>Suppliers</h1>
+<a asp-action="Create">Create Supplier</a>
 <table>
     <thead>
         <tr>
-            <th>Nombre</th>
-            <th>Contacto</th>
-            <th>Acciones</th>
+            <th>Name</th>
+            <th>Contact</th>
         </tr>
     </thead>
     <tbody>
@@ -18,9 +17,9 @@
                 <td>@supplier.Name</td>
                 <td>@supplier.Contact</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@supplier.SupplierId">Detalles</a>
-                    <a asp-action="Edit" asp-route-id="@supplier.SupplierId">Editar</a>
-                    <a asp-action="Delete" asp-route-id="@supplier.SupplierId">Eliminar</a>
+                    <a asp-action="Details" asp-route-id="@supplier.SupplierId">Details</a>
+                    <a asp-action="Edit" asp-route-id="@supplier.SupplierId">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@supplier.SupplierId">Delete</a>
                 </td>
             </tr>
         }

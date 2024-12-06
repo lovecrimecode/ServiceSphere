@@ -7,6 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Events\Detaills.cshtml" />
+    <Content Remove="Views\Guests\Detaills.cshtml" />
+    <Content Remove="Views\Organizers\Detaills.cshtml" />
+    <Content Remove="Views\Services\Detaills.cshtml" />
+    <Content Remove="Views\Suppliers\Detaills.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Views\Events\Detaills.cshtml" />
+    <Compile Include="Views\Guests\Detaills.cshtml" />
+    <Compile Include="Views\Organizers\Detaills.cshtml" />
+    <Compile Include="Views\Services\Detaills.cshtml" />
+    <Compile Include="Views\Suppliers\Detaills.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">

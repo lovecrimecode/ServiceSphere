@@ -1,9 +1,9 @@
-﻿<!-- ServiceSphere.Web/Views/Service/Create.cshtml -->
-@model ServiceSphere.Domain.Entities.Service
+﻿@model ServiceSphere.Domain.Entities.Organizer
 
-<h1>Crear Servicio</h1>
+<h1>Edit Organizer</h1>
 
-<form asp-action="Create" method="post">
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="OrganizerId" />
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" />
@@ -14,5 +14,5 @@
         <textarea asp-for="Description"></textarea>
         <span asp-validation-for="Description"></span>
     </div>
-    <button type="submit">Crear</button>
+    <button type="submit">Update</button>
 </form>

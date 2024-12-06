@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ServiceSphere.Domain.Entities.Service>
+
+<h1>Guests</h1>
+<a asp-action="Create">Create Guest</a>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var service in Model)
+        {
+            <tr>
+                <td>@service.Name</td>
+                <td>@service.Description</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@service.ServiceId">Details</a>
+                    <a asp-action="Edit" asp-route-id="@service.ServiceId">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@service.ServiceId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
