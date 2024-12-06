@@ -1,78 +1,48 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceSphere.Domain.Entities;
 using ServiceSphere.Application.Services;
+using ServiceSphere.Domain;
+using ServiceSphere.Infrastructure.Persistence.Context;
 
-[Route("events")]
-public class EventController : Controller
+namespace PaqJet.Web.Controllers
 {
-    private readonly EventService _eventService;
-
-    public EventController(EventService eventService)
+    public class EventsController : Controller
     {
-        _eventService = eventService;
-    }
+        private readonly ServiceSphereDbContext _context;
 
-    [HttpGet]
-    public async Task<IActionResult> Index()
-    {
-        var events = await _eventService.GetAllEventsAsync();
-        return View(events);
-    }
+        public EventsController(ServiceSphereDbContext context)
+        {
+            _context = context;
+        }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Details(int id)
-    {
-        var evento = await _eventService.GetEventByIdAsync(id);
-        if (evento == null) return NotFound();
-        return View(evento);
-    }
+        // GET: Events
+        public async Task<IActionResult> Index()
+        {
+            return View();
+        }
 
-    [HttpGet("create")]
-    public IActionResult Create()
-    {
-        return View();
-    }
+        // GET: Events/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            return View();
 
-/*    [HttpPost("create")]
-    public async Task<IActionResult> Create(Event newEvent)
-    {
-        if (!ModelState.IsValid)
-            return View(newEvent);
+        }
 
-        await _eventService.CreateEventAsync(newEvent);
-        return RedirectToAction(nameof(Index));
-    }*/
+        // GET: Events/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-    [HttpGet("edit/{id}")]
-    public async Task<IActionResult> Edit(int id)
-    {
-        var evento = await _eventService.GetEventByIdAsync(id);
-        if (evento == null) return NotFound();
-        return View(evento);
-    }
 
-    [HttpPost("edit/{id}")]
-    public async Task<IActionResult> Edit(Event updatedEvent)
-    {
-        if (!ModelState.IsValid)
-            return View(updatedEvent);
+        public async Task<IActionResult> Edit(int? id)
+        {
+            return View();
+        }
 
-        await _eventService.UpdateEventAsync(updatedEvent);
-        return RedirectToAction(nameof(Index));
-    }
-
-    [HttpGet("delete/{id}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-        var evento = await _eventService.GetEventByIdAsync(id);
-        if (evento == null) return NotFound();
-        return View(evento);
-    }
-
-    [HttpPost("delete/{id}")]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        await _eventService.DeleteEventAsync(id);
-        return RedirectToAction(nameof(Index));
+        private bool EventrExists(int id)
+        {
+            return _context.Events.Any(e => e.Id == id);
+        }
     }
 }

@@ -1,94 +1,85 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ServiceSphere.Domain;
+using ServiceSphere.Application.Services;
+using ServiceSphere.Application.Interfaces;
 using ServiceSphere.Domain.Entities;
-using System.Threading.Tasks;
+using ServiceSphere.Infrastructure.Models;
 using System.Collections.Generic;
-using ServiceSphere.Infrastructure.Persistence.Context;
+using System.Threading.Tasks;
 
 namespace ServiceSphere.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class EventsController : ControllerBase
     {
-        private readonly ServiceSphereDbContext _context;
+        private readonly IEventService _eventService;
 
-        public EventsController(ServiceSphereDbContext context)
+        public EventsController(IEventService eventService) // Cambiado a IEventService para seguir la interfaz
         {
-            _context = context;
+            _eventService = eventService;
         }
 
-        // GET: api/events
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
+        public async Task<ActionResult<IEnumerable<EventModel>>> GetEvents()
         {
-            return await _context.Events.ToListAsync();
+            var events = await _eventService.GetAllEventsAsync();
+            return Ok(events);
         }
 
-        // GET: api/events/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Event>> GetEvent(int id)
+        public async Task<ActionResult<EventModel>> GetEvent(int id)
         {
-            var eventItem = await _context.Events.FindAsync(id);
-
-            if (eventItem == null)
-                return NotFound();
-
-            return eventItem;
+            var eventItem = await _eventService.GetEventByIdAsync(id);
+            if (eventItem == null) return NotFound("Event not found.");
+            return Ok(eventItem);
         }
 
-        // POST: api/events
         [HttpPost]
-        public async Task<ActionResult<Event>> CreateEvent(Event eventItem)
+        public async Task<ActionResult> CreateEvent(EventModel eventModel)
         {
-            _context.Events.Add(eventItem);
-            await _context.SaveChangesAsync();
+            if (eventModel == null || string.IsNullOrWhiteSpace(eventModel.Name))
+                return BadRequest("Invalid event data.");
 
-            return CreatedAtAction(nameof(GetEvent), new { id = eventItem.EventId }, eventItem);
+            var eventItem = new Event
+            {
+                Name = eventModel.Name,
+                Date = eventModel.Date,
+                Location = eventModel.Location,
+                Budget = eventModel.Budget
+            };
+
+            await _eventService.AddEventAsync(eventItem);
+            return CreatedAtAction(nameof(GetEvent), new { id = eventItem.Id }, eventItem);
         }
 
-        // PUT: api/events/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEvent(int id, Event eventItem)
+        public async Task<ActionResult> UpdateEvent(int id, EventModel eventModel)
         {
-            if (id != eventItem.EventId)
-                return BadRequest();
+            if (eventModel == null || string.IsNullOrWhiteSpace(eventModel.Name))
+                return BadRequest("Invalid event data.");
 
-            _context.Entry(eventItem).State = EntityState.Modified;
+            var eventItem = new Event
+            {
+                Id = id,
+                Name = eventModel.Name,
+                Date = eventModel.Date,
+                Location = eventModel.Location,
+                Budget = eventModel.Budget
+            };
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
+            var success = await _eventService.UpdateEventAsync(eventItem);
+            if (!success) return NotFound("Event not found for update.");
 
             return NoContent();
         }
 
-        // DELETE: api/events/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEvent(int id)
+        public async Task<ActionResult> DeleteEvent(int id)
         {
-            var eventItem = await _context.Events.FindAsync(id);
-            if (eventItem == null)
-                return NotFound();
-
-            _context.Events.Remove(eventItem);
-            await _context.SaveChangesAsync();
+            var success = await _eventService.DeleteEventAsync(id);
+            if (!success) return NotFound("Event not found for deletion.");
 
             return NoContent();
-        }
-
-        private bool EventExists(int id)
-        {
-            return _context.Events.Any(e => e.EventId == id);
         }
     }
 }

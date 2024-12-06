@@ -1,75 +1,78 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using ServiceSphere.Application.Interfaces;
+using ServiceSphere.Application.Services;
 using ServiceSphere.Domain.Entities;
-using ServiceSphere.Infrastructure.Persistence.Context;
+using ServiceSphere.Infrastructure.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServiceSphere.Api.Controllers
+namespace ServiceSphere.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ServicesController : ControllerBase
     {
-        private readonly ServiceSphereDbContext _context;
+        private readonly ServiceService _serviceService;
 
-        public ServicesController(ServiceSphereDbContext context)
+        public ServicesController(ServiceService serviceService)
         {
-            _context = context;
+            _serviceService = serviceService;
         }
 
-        // GET: api/Services
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Service>>> GetServices()
+        public async Task<ActionResult<IEnumerable<ServiceModel>>> GetServices()
         {
-            return await _context.Services.ToListAsync();
+            var services = await _serviceService.GetAllServicesAsync();
+            return Ok(services);
         }
 
-        // GET: api/Services/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Service>> GetService(int id)
+        public async Task<ActionResult<ServiceModel>> GetService(int id)
         {
-            var service = await _context.Services.FindAsync(id);
-            if (service == null)
-                return NotFound();
-
-            return service;
+            var serviceItem = await _serviceService.GetServiceByIdAsync(id);
+            if (serviceItem == null) return NotFound("Service not found.");
+            return Ok(serviceItem);
         }
 
-        // POST: api/Services
         [HttpPost]
-        public async Task<ActionResult<Service>> CreateService(Service service)
+        public async Task<ActionResult> CreateService(ServiceModel serviceModel)
         {
-            _context.Services.Add(service);
-            await _context.SaveChangesAsync();
+            if (serviceModel == null || string.IsNullOrWhiteSpace(serviceModel.Name))
+                return BadRequest("Invalid service data.");
 
-            return CreatedAtAction(nameof(GetService), new { id = service.ServiceId }, service);
+            var serviceItem = new Service
+            {
+                Name = serviceModel.Name,
+                Cost = serviceModel.Cost,
+                Description = serviceModel.Description
+            };
+
+            await _serviceService.AddServiceAsync(serviceItem);
+            return CreatedAtAction(nameof(GetService), new { id = serviceItem.ServiceId }, serviceItem);
         }
 
-        // PUT: api/Services/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateService(int id, Service service)
+        public async Task<ActionResult> UpdateService(int id, ServiceModel serviceModel)
         {
-            if (id != service.ServiceId)
-                return BadRequest();
+            if (serviceModel == null || string.IsNullOrWhiteSpace(serviceModel.Name))
+                return BadRequest("Invalid service data.");
 
-            _context.Entry(service).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var serviceItem = new Service
+            {
+                ServiceId = id,
+                Name = serviceModel.Name,
+                Cost = serviceModel.Cost,
+                Description = serviceModel.Description
+            };
 
+            await _serviceService.UpdateServiceAsync(serviceItem);
             return NoContent();
         }
 
-        // DELETE: api/Services/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteService(int id)
+        public async Task<ActionResult> DeleteService(int id)
         {
-            var service = await _context.Services.FindAsync(id);
-            if (service == null)
-                return NotFound();
-
-            _context.Services.Remove(service);
-            await _context.SaveChangesAsync();
-
+            await _serviceService.DeleteServiceAsync(id);
             return NoContent();
         }
     }

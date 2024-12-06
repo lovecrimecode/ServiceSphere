@@ -1,70 +1,76 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using ServiceSphere.Application.Services;
 using ServiceSphere.Domain.Entities;
-using ServiceSphere.Infrastructure.Persistence.Context;
+using ServiceSphere.Infrastructure.Models;
+using ServiceSphere.Application.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServiceSphere.Api.Controllers
+namespace ServiceSphere.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class GuestsController : ControllerBase
     {
-        private readonly ServiceSphereDbContext _context;
+        private readonly GuestService _guestService;
 
-        public GuestsController(ServiceSphereDbContext context)
+        public GuestsController(GuestService guestService)
         {
-            _context = context;
+            _guestService = guestService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Guest>>> GetGuests()
+        public async Task<ActionResult<IEnumerable<GuestModel>>> GetGuests()
         {
-            return await _context.Guests.ToListAsync();
+            var guests = await _guestService.GetAllGuestsAsync();
+            return Ok(guests);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Guest>> GetGuest(int id)
+        public async Task<ActionResult<GuestModel>> GetGuest(int id)
         {
-            var guest = await _context.Guests.FindAsync(id);
-            if (guest == null)
-                return NotFound();
-
-            return guest;
+            var guestItem = await _guestService.GetGuestByIdAsync(id);
+            if (guestItem == null) return NotFound("Guest not found.");
+            return Ok(guestItem);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guest>> CreateGuest(Guest guest)
+        public async Task<ActionResult> CreateGuest(GuestModel guestModel)
         {
-            _context.Guests.Add(guest);
-            await _context.SaveChangesAsync();
+            if (guestModel == null || string.IsNullOrWhiteSpace(guestModel.Name))
+                return BadRequest("Invalid guest data.");
 
-            return CreatedAtAction(nameof(GetGuest), new { id = guest.Id }, guest);
+            var guestItem = new Guest
+            {
+                Name = guestModel.Name,
+                IsAttending = guestModel.IsAttending
+            };
+
+            await _guestService.AddGuestAsync(guestItem);
+            return CreatedAtAction(nameof(GetGuest), new { id = guestItem.GuestId }, guestItem);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGuest(int id, Guest guest)
+        public async Task<ActionResult> UpdateGuest(int id, GuestModel guestModel)
         {
-            if (id != guest.Id)
-                return BadRequest();
+            if (guestModel == null || string.IsNullOrWhiteSpace(guestModel.Name))
+                return BadRequest("Invalid guest data.");
 
-            _context.Entry(guest).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var guestItem = new Guest
+            {
+                GuestId = id,
+                Name = guestModel.Name,
+                IsAttending = guestModel.IsAttending
+            };
 
+            await _guestService.UpdateGuestAsync(guestItem);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGuest(int id)
+        public async Task<ActionResult> DeleteGuest(int id)
         {
-            var guest = await _context.Guests.FindAsync(id);
-            if (guest == null)
-                return NotFound();
-
-            _context.Guests.Remove(guest);
-            await _context.SaveChangesAsync();
-
+            await _guestService.DeleteGuestAsync(id);
             return NoContent();
         }
     }

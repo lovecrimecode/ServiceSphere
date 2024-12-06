@@ -1,73 +1,48 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceSphere.Domain.Entities;
 using ServiceSphere.Application.Services;
+using ServiceSphere.Domain;
+using ServiceSphere.Infrastructure.Persistence.Context;
 
-[Route("services")]
-public class ServiceController : Controller
+namespace PaqJet.Web.Controllers
 {
-    private readonly ServiceService _serviceService;
-
-    public ServiceController(ServiceService serviceService)
+    public class ServicesController : Controller
     {
-        _serviceService = serviceService;
-    }
+        private readonly ServiceSphereDbContext _context;
 
-    public async Task<IActionResult> Index()
-    {
-        var services = await _serviceService.GetAllServicesAsync();
-        return View(services);
-    }
+        public ServicesController(ServiceSphereDbContext context)
+        {
+            _context = context;
+        }
 
-    public async Task<IActionResult> Details(int id)
-    {
-        var service = await _serviceService.GetServiceByIdAsync(id);
-        if (service == null) return NotFound();
-        return View(service);
-    }
+        // GET: Services
+        public async Task<IActionResult> Index()
+        {
+            return View();
+        }
 
-    public IActionResult Create()
-    {
-        return View();
-    }
+        // GET: Services/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            return View();
 
-    [HttpPost]
-/*    public async Task<IActionResult> Create(Service newService)
-    {
-        if (!ModelState.IsValid)
-            return View(newService);
+        }
 
-        await _serviceService.CreateServiceAsync(newService);
-        return RedirectToAction(nameof(Index));
-    }*/
+        // GET: Services/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-    public async Task<IActionResult> Edit(int id)
-    {
-        var service = await _serviceService.GetServiceByIdAsync(id);
-        if (service == null) return NotFound();
-        return View(service);
-    }
 
-    [HttpPost]
-    public async Task<IActionResult> Edit(Service updatedService)
-    {
-        if (!ModelState.IsValid)
-            return View(updatedService);
+        public async Task<IActionResult> Edit(int? id)
+        {
+            return View();
+        }
 
-        await _serviceService.UpdateServiceAsync(updatedService);
-        return RedirectToAction(nameof(Index));
-    }
-
-    public async Task<IActionResult> Delete(int id)
-    {
-        var service = await _serviceService.GetServiceByIdAsync(id);
-        if (service == null) return NotFound();
-        return View(service);
-    }
-
-    [HttpPost, ActionName("Delete")]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        await _serviceService.DeleteServiceAsync(id);
-        return RedirectToAction(nameof(Index));
+        private bool EventrExists(int id)
+        {
+            return _context.Services.Any(e => e.Id == id);
+        }
     }
 }

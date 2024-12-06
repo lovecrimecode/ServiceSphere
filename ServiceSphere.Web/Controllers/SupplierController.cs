@@ -1,73 +1,48 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceSphere.Domain.Entities;
 using ServiceSphere.Application.Services;
+using ServiceSphere.Domain;
+using ServiceSphere.Infrastructure.Persistence.Context;
 
-[Route("suppliers")]
-public class SupplierController : Controller
+namespace PaqJet.Web.Controllers
 {
-    private readonly SupplierService _supplierService;
-
-    public SupplierController(SupplierService supplierService)
+    public class SuppliersController : Controller
     {
-        _supplierService = supplierService;
-    }
+        private readonly ServiceSphereDbContext _context;
 
-    public async Task<IActionResult> Index()
-    {
-        var suppliers = await _supplierService.GetAllSuppliersAsync();
-        return View(suppliers);
-    }
+        public SuppliersController(ServiceSphereDbContext context)
+        {
+            _context = context;
+        }
 
-    public async Task<IActionResult> Details(int id)
-    {
-        var supplier = await _supplierService.GetSupplierByIdAsync(id);
-        if (supplier == null) return NotFound();
-        return View(supplier);
-    }
+        // GET: Suppliers
+        public async Task<IActionResult> Index()
+        {
+            return View();
+        }
 
-    public IActionResult Create()
-    {
-        return View();
-    }
+        // GET: Suppliers/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            return View();
 
-    [HttpPost]
-/*    public async Task<IActionResult> Create(Supplier newSupplier)
-    {
-        if (!ModelState.IsValid)
-            return View(newSupplier);
+        }
 
-        await _supplierService.CreateSupplierAsync(newSupplier);
-        return RedirectToAction(nameof(Index));
-    }*/
+        // GET: Suppliers/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-    public async Task<IActionResult> Edit(int id)
-    {
-        var supplier = await _supplierService.GetSupplierByIdAsync(id);
-        if (supplier == null) return NotFound();
-        return View(supplier);
-    }
 
-    [HttpPost]
-    public async Task<IActionResult> Edit(Supplier updatedSupplier)
-    {
-        if (!ModelState.IsValid)
-            return View(updatedSupplier);
+        public async Task<IActionResult> Edit(int? id)
+        {
+            return View();
+        }
 
-        await _supplierService.UpdateSupplierAsync(updatedSupplier);
-        return RedirectToAction(nameof(Index));
-    }
-
-    public async Task<IActionResult> Delete(int id)
-    {
-        var supplier = await _supplierService.GetSupplierByIdAsync(id);
-        if (supplier == null) return NotFound();
-        return View(supplier);
-    }
-
-    [HttpPost, ActionName("Delete")]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        await _supplierService.DeleteSupplierAsync(id);
-        return RedirectToAction(nameof(Index));
+        private bool EventrExists(int id)
+        {
+            return _context.Suppliers.Any(e => e.Id == id);
+        }
     }
 }

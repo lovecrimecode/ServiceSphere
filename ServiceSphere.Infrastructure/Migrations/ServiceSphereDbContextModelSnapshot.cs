@@ -22,27 +22,37 @@ namespace ServiceSphere.Infrastructure.Migrations
                     b.Property<int>("EventsId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ServicesServiceId")
+                    b.Property<int>("ServicesId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("EventsId", "ServicesServiceId");
+                    b.HasKey("EventsId", "ServicesId");
 
-                    b.HasIndex("ServicesServiceId");
+                    b.HasIndex("ServicesId");
 
                     b.ToTable("EventService");
                 });
 
             modelBuilder.Entity("ServiceSphere.Domain.Entities.Event", b =>
                 {
-                    b.Property<int>("EventId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Budget")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -52,16 +62,35 @@ namespace ServiceSphere.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("EventId");
+                    b.Property<int>("OrganizerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizerId");
 
                     b.ToTable("Events");
                 });
 
             modelBuilder.Entity("ServiceSphere.Domain.Entities.Guest", b =>
                 {
-                    b.Property<int>("EventId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("EventId")
                         .HasColumnType("INTEGER");
@@ -76,34 +105,99 @@ namespace ServiceSphere.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("EventId");
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("EventId");
 
                     b.ToTable("Guests");
                 });
 
-            modelBuilder.Entity("ServiceSphere.Domain.Entities.Service", b =>
+            modelBuilder.Entity("ServiceSphere.Domain.Entities.Organizer", b =>
                 {
-                    b.Property<int>("ServiceId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("Cost")
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ServiceId");
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Organizer");
+                });
+
+            modelBuilder.Entity("ServiceSphere.Domain.Entities.Service", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Services");
                 });
 
             modelBuilder.Entity("ServiceSphere.Domain.Entities.Supplier", b =>
                 {
-                    b.Property<int>("EventId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -111,24 +205,41 @@ namespace ServiceSphere.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("EventId");
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("ServiceSupplier", b =>
                 {
-                    b.Property<int>("ServicesServiceId")
+                    b.Property<int>("ServicesId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("SuppliersId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ServicesServiceId", "SuppliersId");
+                    b.HasKey("ServicesId", "SuppliersId");
 
                     b.HasIndex("SuppliersId");
 
@@ -145,9 +256,20 @@ namespace ServiceSphere.Infrastructure.Migrations
 
                     b.HasOne("ServiceSphere.Domain.Entities.Service", null)
                         .WithMany()
-                        .HasForeignKey("ServicesServiceId")
+                        .HasForeignKey("ServicesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ServiceSphere.Domain.Entities.Event", b =>
+                {
+                    b.HasOne("ServiceSphere.Domain.Entities.Organizer", "Organizer")
+                        .WithMany("Events")
+                        .HasForeignKey("OrganizerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organizer");
                 });
 
             modelBuilder.Entity("ServiceSphere.Domain.Entities.Guest", b =>
@@ -165,7 +287,7 @@ namespace ServiceSphere.Infrastructure.Migrations
                 {
                     b.HasOne("ServiceSphere.Domain.Entities.Service", null)
                         .WithMany()
-                        .HasForeignKey("ServicesServiceId")
+                        .HasForeignKey("ServicesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -179,6 +301,11 @@ namespace ServiceSphere.Infrastructure.Migrations
             modelBuilder.Entity("ServiceSphere.Domain.Entities.Event", b =>
                 {
                     b.Navigation("Guests");
+                });
+
+            modelBuilder.Entity("ServiceSphere.Domain.Entities.Organizer", b =>
+                {
+                    b.Navigation("Events");
                 });
 #pragma warning restore 612, 618
         }

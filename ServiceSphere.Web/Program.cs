@@ -20,19 +20,6 @@ builder.Services.AddScoped<ServiceService>();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddHttpClient<EventService>(client =>
-{
-    client.BaseAddress = new Uri("https://localhost:7275/");
-});
-builder.Services.AddHttpClient<ServiceService>(client =>
-{
-    client.BaseAddress = new Uri("https://localhost:7275/");
-});
-builder.Services.AddHttpClient<SupplierService>(client =>
-{
-    client.BaseAddress = new Uri("https://localhost:7275/");
-});
-
 builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<SupplierService>();
 builder.Services.AddScoped<ServiceService>();
