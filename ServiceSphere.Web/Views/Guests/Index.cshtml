@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ServiceSphere.Domain.Entities.Service>
+﻿@model IEnumerable<ServiceSphere.Domain.Entities.Guest>
 
 <h1>Guests</h1>
 <a asp-action="Create">Create Guest</a>
@@ -6,8 +6,7 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Descripción</th>
-            <th>Acciones</th>
+            <th>IsAttending</th>
         </tr>
     </thead>
     <tbody>
@@ -15,11 +14,11 @@
         {
             <tr>
                 <td>@service.Name</td>
-                <td>@service.Description</td>
+                <td>@service.IsAttending</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@service.ServiceId">Details</a>
-                    <a asp-action="Edit" asp-route-id="@service.ServiceId">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@service.ServiceId">Delete</a>
+                    <a asp-action="Details" asp-route-id="@service.GuestId">Details</a>
+                    <a asp-action="Edit" asp-route-id="@service.GuestId">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@service.GuestId">Delete</a>
                 </td>
             </tr>
         }

@@ -9,6 +9,7 @@ namespace ServiceSphere.Domain.Entities
 {
     public class Organizer : BaseEntity
     {
+        public int OrganizerId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }

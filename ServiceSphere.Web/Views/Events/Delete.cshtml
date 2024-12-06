@@ -18,7 +18,7 @@
     </dl>
 
     <form asp-action="Delete" method="post">
-        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.EventId)
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-controller="Events" asp-action="Index" class="btn btn-secondary">Cancel</a>
     </form>

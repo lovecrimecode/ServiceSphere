@@ -1,0 +1,16 @@
+﻿@model ServiceSphere.Infrastructure.Models.GuestModel
+
+<h1>Guests Details</h1>
+
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">IsAttending</dt>
+        <dd class="col-sm-10">@Model.IsAttending</dd>
+
+        <!-- Add more fields as necessary -->
+    </dl>
+
+    <a asp-controller="Guests" asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

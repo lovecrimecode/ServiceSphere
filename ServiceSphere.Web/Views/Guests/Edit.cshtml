@@ -1,18 +1,18 @@
-﻿@model ServiceSphere.Domain.Entities.Service
+﻿@model ServiceSphere.Domain.Entities.Guest
 
-<h1>Edit Service</h1>
+<h1>Edit Guest</h1>
 
 <form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="ServiceId" />
+    <input type="hidden" asp-for="GuestId" />
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" />
         <span asp-validation-for="Name"></span>
     </div>
     <div>
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description"></textarea>
-        <span asp-validation-for="Description"></span>
+        <label asp-for="IsAttending"></label>
+        <textarea asp-for="IsAttending"></textarea>
+        <span asp-validation-for="IsAttending"></span>
     </div>
     <button type="submit">Update</button>
 </form>

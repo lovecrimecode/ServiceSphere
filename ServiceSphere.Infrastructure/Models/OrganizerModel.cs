@@ -8,7 +8,7 @@ namespace ServiceSphere.Infrastructure.Models
 {
     public class OrganizerModel
     {
-        public int Id { get; set; }
+        public int OrganizerId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }

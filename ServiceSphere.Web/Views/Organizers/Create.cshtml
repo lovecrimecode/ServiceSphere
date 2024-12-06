@@ -21,14 +21,8 @@
         <span asp-validation-for="Phone" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Budget"></label>
-        <input asp-for="Budget" type="number" step="0.01" class="form-control" />
-        <span asp-validation-for="Budget" class="text-danger"></span>
-    </div>
-
     <button type="submit" class="btn btn-primary">Create</button>
-    <a asp-controller="Events" asp-action="Index" class="btn btn-secondary">Back to List</a>
+    <a asp-controller="Organizers" asp-action="Index" class="btn btn-secondary">Back to List</a>
 </form>
 
 @section Scripts {

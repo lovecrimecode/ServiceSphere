@@ -1,0 +1,20 @@
+﻿@model ServiceSphere.Infrastructure.Models.OrganizerModel
+
+<h1>Organizer Details</h1>
+
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+    <dl class="row">
+
+        <dt class="col-sm-2">Email</dt>
+        <dd class="col-sm-10">@Model.Email</dd>
+
+        <dt class="col-sm-2">Phone</dt>
+        <dd class="col-sm-10">@Model.Phone</dd>
+
+        <!-- Add more fields as necessary -->
+    </dl>
+
+    <a asp-controller="Organizers" asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
