@@ -1,31 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ServiceSphere.Domain.Entities;
 using ServiceSphere.Application.Services;
-using ServiceSphere.Domain;
-using ServiceSphere.Infrastructure.Persistence.Context;
+using ServiceSphere.Infrastructure.Models;
+using ServiceSphere.Domain.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace PaqJet.Web.Controllers
+namespace ServiceSphere.Web.Controllers
 {
     public class ServicesController : Controller
     {
-        private readonly ServiceSphereDbContext _context;
+        private readonly ServiceService _serviceService;
 
-        public ServicesController(ServiceSphereDbContext context)
+        public ServicesController(ServiceService serviceService)
         {
-            _context = context;
+            _serviceService = serviceService;
         }
 
         // GET: Services
         public async Task<IActionResult> Index()
         {
-            return View();
+            var services = await _serviceService.GetAllServicesAsync();
+            return View(services);
         }
 
         // GET: Services/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            return View();
-
+            if (id == null) return NotFound();
+            var serviceItem = await _serviceService.GetServiceByIdAsync(id.Value);
+            if (serviceItem == null) return NotFound("Service not found.");
+            return View(serviceItem);
         }
 
         // GET: Services/Create
@@ -34,15 +38,71 @@ namespace PaqJet.Web.Controllers
             return View();
         }
 
-
-        public async Task<IActionResult> Edit(int? id)
+        [HttpPost]
+        public async Task<IActionResult> Create(ServiceModel serviceModel)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                await _serviceService.AddServiceAsync(new Service
+                {
+                    Name = serviceModel.Name,
+                    Cost = serviceModel.Cost,
+                    Description = serviceModel.Description
+                });
+                return RedirectToAction(nameof(Index));
+            }
+            return View(serviceModel);
         }
 
-        private bool EventrExists(int id)
+        // GET: Services/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            return _context.Services.Any(e => e.Id == id);
+            if (id == null) return NotFound();
+            var serviceItem = await _serviceService.GetServiceByIdAsync(id.Value);
+            if (serviceItem == null) return NotFound("Service not found.");
+
+            var serviceModel = new ServiceModel
+            {
+                ServiceId = serviceItem.ServiceId,
+                Name = serviceItem.Name,
+                Cost = serviceItem.Cost,
+                Description = serviceItem.Description
+            };
+
+            return View(serviceModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ServiceModel serviceModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await _serviceService.UpdateServiceAsync(new Service
+                {
+                    ServiceId = serviceModel.ServiceId,
+                    Name = serviceModel.Name,
+                    Cost = serviceModel.Cost,
+                    Description = serviceModel.Description
+                });
+                return RedirectToAction(nameof(Index));
+            }
+            return View(serviceModel);
+        }
+
+        // GET: Services/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+            var serviceItem = await _serviceService.GetServiceByIdAsync(id.Value);
+            if (serviceItem == null) return NotFound("Service not found.");
+            return View(serviceItem);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _serviceService.DeleteServiceAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

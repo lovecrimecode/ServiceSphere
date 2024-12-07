@@ -1,4 +1,8 @@
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;//
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;//
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;//
 using Microsoft.EntityFrameworkCore;
 using ServiceSphere.Domain.Core;
 using ServiceSphere.Infrastructure.Persistence.Context;
@@ -11,14 +15,20 @@ using ServiceSphere.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuración de DbContext
+/*// Configuración de DbContext
 builder.Services.AddDbContext<ServiceSphereDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+*/
+
+// Agregar Services al contenedor
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // Configuración de CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowWebApp", builder =>
+    options.AddPolicy("AllowAllOrigins", builder =>
     {
         builder.AllowAnyOrigin()
                .AllowAnyMethod()
@@ -26,21 +36,16 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Agregar Services al contenedor
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 //unit of works
 //builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-//repositories
+/*//repositories
 builder.Services.AddTransient<IEventRepository, EventRepository>();
 builder.Services.AddTransient<IGuestRepository, GuestRepository>();
 builder.Services.AddTransient<IOrganizerRepository, OrganizerRepository>();
 builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
 builder.Services.AddTransient<IServiceRepository, ServiceRepository>();
-builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
+builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));*/
 
 
 //services
@@ -62,13 +67,24 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+/*// Configurar el middleware de la aplicación.
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}*/
+
 // **Orden correcto del middleware**
 app.UseHttpsRedirection();
 
 app.UseStaticFiles(); // Sirve archivos estáticos
 app.UseRouting(); // Habilita el enrutamiento
 
-app.UseCors("AllowWebApp"); // Configuración de CORS
+app.UseCors("AllowAllOrigins"); // Configuración de CORS
 app.UseAuthorization(); // Autorización
 
 /*app.UseEndpoints(endpoints =>
