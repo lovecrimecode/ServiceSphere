@@ -1,4 +1,49 @@
-﻿@model IEnumerable<ServiceSphere.Infrastructure.Models.EventModel>
+﻿@{
+    ViewData["Title"] = "Event Management";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .menu-button {
+            margin: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <div class="row">
+            <div class="col-md-3 menu-button">
+                <a href="@Url.Action("Create", "Events")" class="btn btn-primary btn-lg btn-block">Create Event</a>
+            </div>
+            <div class="col-md-3 menu-button">
+                <a href="@Url.Action("Index", "Events")" class="btn btn-secondary btn-lg btn-block">View Events</a>
+            </div>
+            <div class="col-md-3 menu-button">
+                <a href="@Url.Action("Edit", "Events")" class="btn btn-warning btn-lg btn-block">Edit Event</a>
+            </div>
+            <div class="col-md-3 menu-button">
+                <a href="@Url.Action("Delete", "Events")" class="btn btn-danger btn-lg btn-block">Delete Event</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+@* @model IEnumerable<ServiceSphere.Infrastructure.Models.EventModel>
 
 <h1>Events</h1>
 
@@ -26,13 +71,13 @@
                 <td>@eventItem.Budget.ToString("C")</td>
                 <td>
                     <!-- Action buttons -->
-                    <a asp-controller="Events" asp-action="Edit" asp-route-id="@eventItem.Id" class="btn btn-warning">Edit</a>
-                    <a asp-controller="Events" asp-action="Details" asp-route-id="@eventItem.Id" class="btn btn-info">Details</a>
+                    <a asp-controller="Events" asp-action="Edit" asp-route-id="@eventItem.EventId" class="btn btn-warning">Edit</a>
+                    <a asp-controller="Events" asp-action="Details" asp-route-id="@eventItem.EventId" class="btn btn-info">Details</a>
                     <!-- You might want to implement delete functionality -->
                     <!-- Use JavaScript confirmation before delete -->
                     <!-- Example: -->
                     <!--
-                    @Html.ActionLink("Delete", "Delete", new { id = eventItem.Id }, new { onclick = "return confirm('Are you sure?');", @class = "btn btn-danger" })
+                    @Html.ActionLink("Delete", "Delete", new { id = eventItem.EventId }, new { onclick = "return confirm('Are you sure?');", @class = "btn btn-danger" })
                     -->
                 </td>
             </tr>
@@ -44,4 +89,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
+} *@

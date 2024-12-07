@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 //using ServiceSphere.Application;
 using ServiceSphere.Infrastructure.Persistence.Context;
 using ServiceSphere.Application.Services;
-using EventSphere.Infrastructure.Repositories;
 using ServiceSphere.Domain.InterfacesRepos;
 using ServiceSphere.Infrastructure.Repositories;
 
@@ -62,7 +61,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Welcome}/{id?}");
 
 //
 app.MapRazorPages();

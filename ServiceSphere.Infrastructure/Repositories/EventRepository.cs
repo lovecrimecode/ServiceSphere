@@ -3,7 +3,7 @@ using ServiceSphere.Infrastructure.Core;
 using ServiceSphere.Domain.InterfacesRepos;
 using ServiceSphere.Infrastructure.Persistence.Context;
 
-namespace EventSphere.Infrastructure.Repositories
+namespace ServiceSphere.Infrastructure.Repositories
 {
     public class EventRepository : BaseRepository<Event>, IEventRepository
     {

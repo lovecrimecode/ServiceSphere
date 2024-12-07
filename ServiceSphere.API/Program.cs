@@ -9,23 +9,11 @@ using ServiceSphere.Infrastructure.Persistence.Context;
 using ServiceSphere.Infrastructure.Repositories;
 using ServiceSphere.Infrastructure.Core;
 using ServiceSphere.Domain.InterfacesRepos;
-using EventSphere.Infrastructure.Repositories;
 using ServiceSphere.Application.Services;
 using ServiceSphere.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-/*// Configuración de DbContext
-builder.Services.AddDbContext<ServiceSphereDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-*/
-
-// Agregar Services al contenedor
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// Configuración de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", builder =>
@@ -36,47 +24,45 @@ builder.Services.AddCors(options =>
     });
 });
 
-//unit of works
-//builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+// Agregar Services al contenedor
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-/*//repositories
+//repositories
 builder.Services.AddTransient<IEventRepository, EventRepository>();
 builder.Services.AddTransient<IGuestRepository, GuestRepository>();
 builder.Services.AddTransient<IOrganizerRepository, OrganizerRepository>();
 builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
 builder.Services.AddTransient<IServiceRepository, ServiceRepository>();
-builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));*/
+builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
 
 
 //services
-/*builder.Services.AddTransient<IEventService, EventService>();
-builder.Services.AddTransient<IGuestService, GuestService>();
-builder.Services.AddTransient<IOrganizerService, OrganizerService>();
-builder.Services.AddTransient<ISupplierService, SupplierService>();
-builder.Services.AddTransient<IServiceService, ServiceService>();
-builder.Services.AddTransient(typeof(IService<>), typeof(BaseService<>));
-*/
+builder.Services.AddScoped<EventService>();
+builder.Services.AddScoped<GuestService>();
+builder.Services.AddScoped<ServiceService>();
+builder.Services.AddScoped<SupplierService>();
+builder.Services.AddScoped<OrganizerService>();
+//builder.Services.AddTransient(typeof(IService<>), typeof(BaseService<>));
+
+// Configuración de CORS
+
+
 //builder.Services.AddTransient<CustomerService>();
 //builder.Services.AddTransient<ICustomerService, CustomerService>();
 var app = builder.Build();
 
-// Configuración del pipeline de solicitudes HTTP
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-/*// Configurar el middleware de la aplicación.
+// Configurar el middleware de la aplicación.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Shared/Error");
     app.UseHsts();
-}*/
+}
 
 // **Orden correcto del middleware**
 app.UseHttpsRedirection();
@@ -86,13 +72,6 @@ app.UseRouting(); // Habilita el enrutamiento
 
 app.UseCors("AllowAllOrigins"); // Configuración de CORS
 app.UseAuthorization(); // Autorización
-
-/*app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "api/{controller=Home}/{action=Index}/{id?}");
-});*/
 
 app.MapControllers();
 

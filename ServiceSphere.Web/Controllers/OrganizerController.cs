@@ -6,6 +6,7 @@ using ServiceSphere.Application.Services;
 using ServiceSphere.Domain;
 using ServiceSphere.Infrastructure.Persistence.Context;
 using ServiceSphere.Infrastructure.Models;
+
 namespace ServiceSphere.Web.Controllers
 {
     public class OrganizersController : Controller

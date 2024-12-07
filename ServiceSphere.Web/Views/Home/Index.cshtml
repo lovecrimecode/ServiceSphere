@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Event Management";
+    ViewData["Title"] = "Options";
 }
 
 <!DOCTYPE html>
@@ -24,19 +24,28 @@
     <div class="container">
         <h1>@ViewData["Title"]</h1>
         <div class="row">
-            <div class="col-md-3 menu-button">
-                <a href="@Url.Action("Create", "Events")" class="btn btn-primary btn-lg btn-block">Create Event</a>
+            <div class="col-md-4 menu-button">
+                <a href="@Url.Action("Index", "Events")" class="btn btn-primary btn-lg btn-block">Manage Events</a>
             </div>
-            <div class="col-md-3 menu-button">
-                <a href="@Url.Action("Index", "Events")" class="btn btn-secondary btn-lg btn-block">View Events</a>
+            <div class="col-md-4 menu-button">
+                <a href="@Url.Action("Index", "Guests")" class="btn btn-secondary btn-lg btn-block">Manage Guests</a>
             </div>
-            <div class="col-md-3 menu-button">
-                <a href="@Url.Action("Edit", "Events")" class="btn btn-warning btn-lg btn-block">Edit Event</a>
+            <div class="col-md-4 menu-button">
+                <a href="@Url.Action("Index", "Services")" class="btn btn-warning btn-lg btn-block">Manage Services</a>
             </div>
-            <div class="col-md-3 menu-button">
-                <a href="@Url.Action("Delete", "Events")" class="btn btn-danger btn-lg btn-block">Delete Event</a>
+            <div class="col-md-4 menu-button">
+                <a href="@Url.Action("Index", "Suppliers")" class="btn btn-info btn-lg btn-block">Manage Suppliers</a>
+            </div>
+            <div class="col-md-4 menu-button">
+                <a href="@Url.Action("Index", "Organizers")" class="btn btn-success btn-lg btn-block">Manage Organizers</a>
             </div>
         </div>
     </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
 </body>
 </html>

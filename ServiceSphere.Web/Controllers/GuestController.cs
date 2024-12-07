@@ -24,13 +24,13 @@ namespace ServiceSphere.Web.Controllers
         }
 
         // GET: Guests/Details/5
-        public async Task<IActionResult> Details(int? id)
+/*        public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
             var guestItem = await _guestService.GetGuestByIdAsync(id.Value);
             if (guestItem == null) return NotFound("Guest not found.");
             return View(guestItem);
-        }
+        }*/
 
         // GET: Guests/Create
         public IActionResult Create()
@@ -59,6 +59,7 @@ namespace ServiceSphere.Web.Controllers
             if (id == null) return NotFound();
             var guestItem = await _guestService.GetGuestByIdAsync(id.Value);
             if (guestItem == null) return NotFound("Guest not found.");
+
             var guestModel = new GuestModel
             {
                 GuestId = guestItem.GuestId,
