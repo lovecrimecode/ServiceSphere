@@ -26,6 +26,14 @@
         <input asp-for="Budget" type="number" step="0.01" class="form-control" required />
         <span asp-validation-for="Budget" class="text-danger"></span>
     </div>
+    <div>
+        <label for="OrganizerId">Organizer (optional)</label>
+        <select asp-for="OrganizerId" asp-items="ViewBag.Organizers"></select>
+    </div>
+    <div>
+        <label for="Services">Services (optional)</label>
+        <select asp-for="ServiceIds" asp-items="ViewBag.Services" multiple></select>
+    </div>
 
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-controller="Events" asp-action="Index" class="btn btn-secondary">Back to List</a>

@@ -6,12 +6,15 @@ using ServiceSphere.Application.Services;
 using ServiceSphere.Domain;
 using ServiceSphere.Infrastructure.Persistence.Context;
 using ServiceSphere.Infrastructure.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ServiceSphere.Web.Controllers
 {
     public class EventsController : Controller
     {
         private readonly EventService _eventService;
+        private readonly OrganizerService _organizerService;
+        private readonly ServiceService _serviceService;
 
         public EventsController(EventService eventService)
         {
@@ -37,8 +40,10 @@ namespace ServiceSphere.Web.Controllers
         }
 
         // GET: Events/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.Organizers = new SelectList(await _organizerService.GetAllOrganizersAsync(), "OrganizerId", "Name");
+            ViewBag.Services = new SelectList(await _serviceService.GetAllServicesAsync(), "ServiceId", "Name");
             return View(); // Retorna la vista para crear un nuevo evento
         }
 
@@ -52,7 +57,8 @@ namespace ServiceSphere.Web.Controllers
                     Name = eventModel.Name,
                     Date = eventModel.Date,
                     Location = eventModel.Location,
-                    Budget = eventModel.Budget
+                    Budget = eventModel.Budget,
+                    //CreatedBy = User.Identity?.Name ?? "System"
                 });
                 return RedirectToAction(nameof(Index)); // Redirige a la lista de eventos
             }
@@ -83,17 +89,27 @@ namespace ServiceSphere.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _eventService.UpdateEventAsync(new Event
+                var newEvent = new Event
                 {
-                    EventId = eventModel.EventId,
                     Name = eventModel.Name,
                     Date = eventModel.Date,
-                    Location = eventModel.Location,
-                    Budget = eventModel.Budget
-                });
-                return RedirectToAction(nameof(Index)); // Redirige a la lista de eventos
+                    OrganizerId = (int)eventModel.OrganizerId
+                };
+
+                if (eventModel.ServiceIds != null)
+                {
+                    newEvent.Services = eventModel.ServiceIds
+                        .Select(id => new Service { ServiceId = id })
+                        .ToList();
+                }
+
+                await _eventService.AddEventAsync(newEvent);
+                return RedirectToAction(nameof(Index));
             }
-            return View(eventModel); // Retorna a la vista si hay errores en el modelo
+
+            ViewBag.Organizers = new SelectList(await _organizerService.GetAllOrganizersAsync(), "OrganizerId", "Name");
+            ViewBag.Services = new SelectList(await _serviceService.GetAllServicesAsync(), "ServiceId", "Name");
+            return View(eventModel);
         }
 
         // GET: Events/Delete/5

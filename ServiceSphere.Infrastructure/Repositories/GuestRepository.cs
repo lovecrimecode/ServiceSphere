@@ -19,14 +19,14 @@ namespace ServiceSphere.Infrastructure.Repositories
             return await GetByIdAsync(id); // Utiliza el método genérico.
         }
 
-        public async Task AddGuestAsync(Guest organizerItem)
+        public async Task AddGuestAsync(Guest guestItem)
         {
-            await AddAsync(organizerItem); // Utiliza el método genérico.
+            await AddAsync(guestItem); // Utiliza el método genérico.
         }
 
-        public void UpdateGuest(Guest organizerItem)
+        public void UpdateGuest(Guest guestItem)
         {
-            UpdateAsync(organizerItem); // Utiliza el método genérico.
+            UpdateAsync(guestItem); // Utiliza el método genérico.
         }
 
         public void DeleteGuest(int id)

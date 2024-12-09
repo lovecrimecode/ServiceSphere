@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using ServiceSphere.Application.Interfaces;
 using ServiceSphere.Application.Services;
 using ServiceSphere.Domain.Entities;
 using ServiceSphere.Infrastructure.Models;
@@ -10,10 +12,12 @@ namespace ServiceSphere.Web.Controllers
     public class GuestsController : Controller
     {
         private readonly GuestService _guestService;
+        private readonly IEventService _eventService;
 
-        public GuestsController(GuestService guestService)
+        public GuestsController(GuestService guestService, IEventService eventService)
         {
             _guestService = guestService;
+            _eventService = eventService;  // Inicializa el servicio de eventos
         }
 
         // GET: Guests
@@ -23,18 +27,10 @@ namespace ServiceSphere.Web.Controllers
             return View(guests);
         }
 
-        // GET: Guests/Details/5
-/*        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null) return NotFound();
-            var guestItem = await _guestService.GetGuestByIdAsync(id.Value);
-            if (guestItem == null) return NotFound("Guest not found.");
-            return View(guestItem);
-        }*/
-
         // GET: Guests/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.Events = new SelectList(await _eventService.GetAllEventsAsync(), "EventId", "Title");
             return View();
         }
 
@@ -43,13 +39,18 @@ namespace ServiceSphere.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _guestService.AddGuestAsync(new Guest
+                var newGuest = new Guest
                 {
                     Name = guestModel.Name,
-                    IsAttending = guestModel.IsAttending
-                });
+                    IsAttending = guestModel.IsAttending,
+                    EventId = guestModel.EventId // Puede ser null
+                };
+
+                await _guestService.AddGuestAsync(newGuest);
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.Events = new SelectList(await _eventService.GetAllEventsAsync(), "EventId", "Title", guestModel.EventId);
             return View(guestModel);
         }
 
@@ -64,8 +65,10 @@ namespace ServiceSphere.Web.Controllers
             {
                 GuestId = guestItem.GuestId,
                 Name = guestItem.Name,
-                IsAttending = guestItem.IsAttending
+                IsAttending = guestItem.IsAttending,
+                EventId = guestItem.EventId
             };
+            ViewBag.Events = new SelectList(await _eventService.GetAllEventsAsync(), "EventId", "Title", guestModel.EventId);
             return View(guestModel);
         }
 
@@ -82,6 +85,7 @@ namespace ServiceSphere.Web.Controllers
                 });
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Events = new SelectList(await _eventService.GetAllEventsAsync(), "EventId", "Title", guestModel.EventId);
             return View(guestModel);
         }
 

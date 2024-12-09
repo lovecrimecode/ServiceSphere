@@ -35,7 +35,11 @@ namespace ServiceSphere.Web.Controllers
         // GET: Suppliers/Create
         public IActionResult Create()
         {
-            return View();
+            var supplierModel = new SupplierModel
+            {
+                // Aquí colocas los valores necesarios, como se requiera.
+            };
+            return View(supplierModel);
         }
 
         [HttpPost]
@@ -62,7 +66,7 @@ namespace ServiceSphere.Web.Controllers
 
             var supplierModel = new SupplierModel
             {
-                SupplierId = supplierItem.Id,
+                SupplierId = supplierItem.SupplierId,
                 Name = supplierItem.Name,
                 Contact = supplierItem.Contact
             };
@@ -77,7 +81,7 @@ namespace ServiceSphere.Web.Controllers
             {
                 await _supplierService.UpdateSupplierAsync(new Supplier
                 {
-                    Id = supplierModel.SupplierId,
+                    SupplierId = supplierModel.SupplierId,
                     Name = supplierModel.Name,
                     Contact = supplierModel.Contact
                 });

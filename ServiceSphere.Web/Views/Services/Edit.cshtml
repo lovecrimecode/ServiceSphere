@@ -1,4 +1,4 @@
-﻿@model ServiceSphere.Domain.Entities.Service
+﻿@model ServiceSphere.Infrastructure.Models.ServiceModel
 
 <h1>Edit Service</h1>
 
@@ -19,5 +19,6 @@
         <textarea asp-for="Description"></textarea>
         <span asp-validation-for="Description"></span>
     </div>
+
     <button type="submit">Update</button>
 </form>

@@ -6,94 +6,75 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServiceSphere.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class FixedModels : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Organizer",
+                name: "Organizers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    OrganizerId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    Phone = table.Column<string>(type: "TEXT", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false)
+                    Phone = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Organizer", x => x.Id);
+                    table.PrimaryKey("PK_Organizers", x => x.OrganizerId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Services",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    ServiceId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ServiceId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Cost = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false)
+                    Description = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Services", x => x.Id);
+                    table.PrimaryKey("PK_Services", x => x.ServiceId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Suppliers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    SupplierId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    SupplierId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Contact = table.Column<string>(type: "TEXT", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false)
+                    Contact = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Suppliers", x => x.Id);
+                    table.PrimaryKey("PK_Suppliers", x => x.SupplierId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Events",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    EventId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    EventId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Location = table.Column<string>(type: "TEXT", nullable: false),
                     Budget = table.Column<decimal>(type: "TEXT", nullable: false),
-                    OrganizerId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false)
+                    OrganizerId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Events", x => x.Id);
+                    table.PrimaryKey("PK_Events", x => x.EventId);
                     table.ForeignKey(
-                        name: "FK_Events_Organizer_OrganizerId",
+                        name: "FK_Events_Organizers_OrganizerId",
                         column: x => x.OrganizerId,
-                        principalTable: "Organizer",
-                        principalColumn: "Id",
+                        principalTable: "Organizers",
+                        principalColumn: "OrganizerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -101,23 +82,23 @@ namespace ServiceSphere.Infrastructure.Migrations
                 name: "ServiceSupplier",
                 columns: table => new
                 {
-                    ServicesId = table.Column<int>(type: "INTEGER", nullable: false),
-                    SuppliersId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ServicesServiceId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SuppliersSupplierId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ServiceSupplier", x => new { x.ServicesId, x.SuppliersId });
+                    table.PrimaryKey("PK_ServiceSupplier", x => new { x.ServicesServiceId, x.SuppliersSupplierId });
                     table.ForeignKey(
-                        name: "FK_ServiceSupplier_Services_ServicesId",
-                        column: x => x.ServicesId,
+                        name: "FK_ServiceSupplier_Services_ServicesServiceId",
+                        column: x => x.ServicesServiceId,
                         principalTable: "Services",
-                        principalColumn: "Id",
+                        principalColumn: "ServiceId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ServiceSupplier_Suppliers_SuppliersId",
-                        column: x => x.SuppliersId,
+                        name: "FK_ServiceSupplier_Suppliers_SuppliersSupplierId",
+                        column: x => x.SuppliersSupplierId,
                         principalTable: "Suppliers",
-                        principalColumn: "Id",
+                        principalColumn: "SupplierId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -125,23 +106,23 @@ namespace ServiceSphere.Infrastructure.Migrations
                 name: "EventService",
                 columns: table => new
                 {
-                    EventsId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ServicesId = table.Column<int>(type: "INTEGER", nullable: false)
+                    EventsEventId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ServicesServiceId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventService", x => new { x.EventsId, x.ServicesId });
+                    table.PrimaryKey("PK_EventService", x => new { x.EventsEventId, x.ServicesServiceId });
                     table.ForeignKey(
-                        name: "FK_EventService_Events_EventsId",
-                        column: x => x.EventsId,
+                        name: "FK_EventService_Events_EventsEventId",
+                        column: x => x.EventsEventId,
                         principalTable: "Events",
-                        principalColumn: "Id",
+                        principalColumn: "EventId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EventService_Services_ServicesId",
-                        column: x => x.ServicesId,
+                        name: "FK_EventService_Services_ServicesServiceId",
+                        column: x => x.ServicesServiceId,
                         principalTable: "Services",
-                        principalColumn: "Id",
+                        principalColumn: "ServiceId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -149,25 +130,20 @@ namespace ServiceSphere.Infrastructure.Migrations
                 name: "Guests",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    GuestId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    GuestId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     IsAttending = table.Column<bool>(type: "INTEGER", nullable: false),
-                    EventId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false)
+                    EventId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Guests", x => x.Id);
+                    table.PrimaryKey("PK_Guests", x => x.GuestId);
                     table.ForeignKey(
                         name: "FK_Guests_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
-                        principalColumn: "Id",
+                        principalColumn: "EventId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -177,9 +153,9 @@ namespace ServiceSphere.Infrastructure.Migrations
                 column: "OrganizerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventService_ServicesId",
+                name: "IX_EventService_ServicesServiceId",
                 table: "EventService",
-                column: "ServicesId");
+                column: "ServicesServiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Guests_EventId",
@@ -187,9 +163,9 @@ namespace ServiceSphere.Infrastructure.Migrations
                 column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServiceSupplier_SuppliersId",
+                name: "IX_ServiceSupplier_SuppliersSupplierId",
                 table: "ServiceSupplier",
-                column: "SuppliersId");
+                column: "SuppliersSupplierId");
         }
 
         /// <inheritdoc />
@@ -214,7 +190,7 @@ namespace ServiceSphere.Infrastructure.Migrations
                 name: "Suppliers");
 
             migrationBuilder.DropTable(
-                name: "Organizer");
+                name: "Organizers");
         }
     }
 }

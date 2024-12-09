@@ -11,8 +11,13 @@
 
     <div class="form-group">
         <label asp-for="IsAttending"></label>
-        <input asp-for="IsAttending" class="form-control" />
+        <input asp-for="IsAttending" type="checkbox" class="form-control" />
         <span asp-validation-for="IsAttending" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="EventId">Event (optional)</label>
+        <select asp-for="EventId" asp-items="ViewBag.Events"></select>
+        <span asp-validation-for="EventId"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Create</button>

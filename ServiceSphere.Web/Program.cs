@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 //using ServiceSphere.Application;
 using ServiceSphere.Infrastructure.Persistence.Context;
 using ServiceSphere.Application.Services;
+using ServiceSphere.Application.Interfaces;
 using ServiceSphere.Domain.InterfacesRepos;
 using ServiceSphere.Infrastructure.Repositories;
 
@@ -19,17 +20,17 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ServiceSphereDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
-builder.Services.AddScoped<EventService>();
+builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<SupplierService>();
 builder.Services.AddScoped<ServiceService>();
-
-builder.Services.AddScoped<EventService>();
-builder.Services.AddScoped<SupplierService>();
-builder.Services.AddScoped<ServiceService>();
+builder.Services.AddScoped<GuestService>();
+builder.Services.AddScoped<OrganizerService>();
 
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<IGuestRepository, GuestRepository>();
+builder.Services.AddScoped<IOrganizerRepository, OrganizerRepository>();
 //
 
 var app = builder.Build();

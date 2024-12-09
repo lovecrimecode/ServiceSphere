@@ -27,12 +27,14 @@ namespace ServiceSphere.Application.Services
 
         public async Task AddSupplierAsync(Supplier supplierItem)
         {
+            //supplierItem.CreatedBy = "System";
             await _supplierRepository.AddAsync(supplierItem);
             // Manejo de excepciones puede ser agregado aquí.
         }
 
         public async Task UpdateSupplierAsync(Supplier supplierItem)
         {
+            //supplierItem.UpdatedBy = "System";
             await _supplierRepository.UpdateAsync(supplierItem);
             // Manejo de excepciones puede ser agregado aquí.
         }

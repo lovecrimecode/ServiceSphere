@@ -27,6 +27,7 @@ namespace ServiceSphere.Application.Services
 
         public async Task AddGuestAsync(Guest guestItem)
         {
+            //guestItem.CreatedBy = "System";
             await _guestRepository.AddAsync(guestItem);
             // Manejo de excepciones puede ser agregado aquí.
         }

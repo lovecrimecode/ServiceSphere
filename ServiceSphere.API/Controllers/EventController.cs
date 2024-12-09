@@ -49,7 +49,7 @@ namespace ServiceSphere.API.Controllers
             };
 
             await _eventService.AddEventAsync(eventItem);
-            return CreatedAtAction(nameof(GetEvent), new { id = eventItem.Id }, eventItem);
+            return CreatedAtAction(nameof(GetEvent), new { id = eventItem.EventId }, eventItem);
         }
 
         [HttpPut("{id}")]
@@ -60,7 +60,7 @@ namespace ServiceSphere.API.Controllers
 
             var eventItem = new Event
             {
-                Id = id,
+                EventId = id,
                 Name = eventModel.Name,
                 Date = eventModel.Date,
                 Location = eventModel.Location,

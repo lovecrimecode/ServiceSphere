@@ -20,7 +20,17 @@ namespace ServiceSphere.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var services = await _serviceService.GetAllServicesAsync();
-            return View(services);
+
+            // Convertir los servicios a ServiceModel
+            var serviceModels = services.Select(service => new ServiceModel
+            {
+                ServiceId = service.ServiceId,
+                Name = service.Name,
+                Cost = service.Cost,
+                Description = service.Description
+            }).ToList();
+
+            return View(serviceModels); // Pasar ServiceModel en lugar de Service
         }
 
         // GET: Services/Details/5

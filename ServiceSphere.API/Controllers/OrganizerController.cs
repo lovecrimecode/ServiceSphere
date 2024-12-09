@@ -43,7 +43,7 @@ namespace ServiceSphere.API.Controllers
                 return BadRequest("Invalid organizer data."); // Validación simple.
 
             await _organizerService.AddOrganizerAsync(organizer); // Agregar organizador.
-            return CreatedAtAction(nameof(GetOrganizer), new { id = organizer.Id }, organizer); // Retorna 201 Created.
+            return CreatedAtAction(nameof(GetOrganizer), new { id = organizer.OrganizerId }, organizer); // Retorna 201 Created.
         }
 
         [HttpPut("{id}")]
@@ -52,7 +52,7 @@ namespace ServiceSphere.API.Controllers
             if (organizer == null || string.IsNullOrWhiteSpace(organizer.Name))
                 return BadRequest("Invalid organizer data."); // Validación simple.
 
-            organizer.Id = id; // Asignar el ID del organizador a actualizar.
+            organizer.OrganizerId = id; // Asignar el ID del organizador a actualizar.
             await _organizerService.UpdateOrganizerAsync(organizer); // Update organizador.
             return NoContent(); // Retorna 204 No Content.
         }

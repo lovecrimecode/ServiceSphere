@@ -43,7 +43,7 @@ namespace ServiceSphere.API.Controllers
                 return BadRequest("Invalid supplier data."); // Validación simple.
 
             await _supplierService.AddSupplierAsync(supplier); // Agregar proveedor.
-            return CreatedAtAction(nameof(GetSupplier), new { id = supplier.Id }, supplier); // Retorna 201 Created.
+            return CreatedAtAction(nameof(GetSupplier), new { id = supplier.SupplierId }, supplier); // Retorna 201 Created.
         }
 
         [HttpPut("{id}")]
@@ -52,7 +52,7 @@ namespace ServiceSphere.API.Controllers
             if (supplier == null || string.IsNullOrWhiteSpace(supplier.Name))
                 return BadRequest("Invalid supplier data."); // Validación simple.
 
-            supplier.Id = id; // Asignar el ID del proveedor a actualizar.
+            supplier.SupplierId = id; // Asignar el ID del proveedor a actualizar.
             await _supplierService.UpdateSupplierAsync(supplier); // Update proveedor.
             return NoContent(); // Retorna 204 No Content.
         }

@@ -46,11 +46,6 @@ builder.Services.AddScoped<SupplierService>();
 builder.Services.AddScoped<OrganizerService>();
 //builder.Services.AddTransient(typeof(IService<>), typeof(BaseService<>));
 
-// Configuración de CORS
-
-
-//builder.Services.AddTransient<CustomerService>();
-//builder.Services.AddTransient<ICustomerService, CustomerService>();
 var app = builder.Build();
 
 // Configurar el middleware de la aplicación.

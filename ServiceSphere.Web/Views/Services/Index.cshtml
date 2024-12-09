@@ -22,15 +22,8 @@
                 <td>@ServiceItem.Cost.ToString("C")</td>
                 <td>@ServiceItem.Description</td>
                 <td>
-                    <!-- Action buttons -->
                     <a asp-controller="Services" asp-action="Edit" asp-route-id="@ServiceItem.ServiceId" class="btn btn-warning">Edit</a>
-                    <a asp-controller="Services" asp-action="Details" asp-route-id="@ServiceItem.ServiceId" class="btn btn-info">Details</a>
-                    <!-- You might want to implement delete functionality -->
-                    <!-- Use JavaScript confirmation before delete -->
-                    <!-- Example: -->
-                    <!--
-                    @Html.ActionLink("Delete", "Delete", new { id = ServiceItem.ServiceId }, new { onclick = "return confirm('Are you sure?');", @class = "btn btn-danger" })
-                    -->
+                    <a asp-controller="Services" asp-action="Delete" asp-route-id="@ServiceItem.ServiceId" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }

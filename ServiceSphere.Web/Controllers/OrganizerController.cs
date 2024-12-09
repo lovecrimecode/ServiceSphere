@@ -68,7 +68,7 @@ namespace ServiceSphere.Web.Controllers
 
             var organizerModel = new OrganizerModel
             {
-                OrganizerId = organizerItem.Id,
+                OrganizerId = organizerItem.OrganizerId,
                 Name = organizerItem.Name,
                 Phone = organizerItem.Phone,
                 Email = organizerItem.Email
