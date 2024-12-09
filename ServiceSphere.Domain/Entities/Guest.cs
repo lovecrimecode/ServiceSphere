@@ -20,6 +20,7 @@ namespace ServiceSphere.Domain.Entities
         // Relationships
         public int? EventId { get; set; }
         public Event? Event { get; set; }
+        public string? EventName { get; set; }
     }
 
 }

@@ -18,6 +18,7 @@ namespace ServiceSphere.Infrastructure.Models
         public bool IsAttending { get; set; }
 
         public int? EventId { get; set; } // Relación opcional
+        public string? EventName { get; set; }
         public Event? Event { get; set; }
     }
 }

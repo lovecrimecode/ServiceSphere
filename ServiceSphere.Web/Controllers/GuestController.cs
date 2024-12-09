@@ -23,9 +23,19 @@ namespace ServiceSphere.Web.Controllers
         // GET: Guests
         public async Task<IActionResult> Index()
         {
-            var guests = await _guestService.GetAllGuestsAsync();
-            return View(guests);
+            var guests = await _guestService.GetAllGuestsAsync(); // Obtener todos los invitados
+            foreach (var guest in guests)
+            {
+                if (guest.EventId != null)
+                {
+                    var eventItem = await _eventService.GetEventByIdAsync(guest.EventId.Value); // Obtener el evento asociado
+                    guest.EventName = eventItem?.Name; // Asignar el nombre del evento al invitado
+                }
+            }
+
+            return View(guests); // Pasar los invitados con el nombre del evento
         }
+
 
         // GET: Guests/Create
         public async Task<IActionResult> Create()
