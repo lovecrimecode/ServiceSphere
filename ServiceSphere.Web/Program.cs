@@ -4,11 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 //using ServiceSphere.Application;
-using ServiceSphere.Infrastructure.Persistence.Context;
 using ServiceSphere.Application.Services;
 using ServiceSphere.Application.Interfaces;
 using ServiceSphere.Domain.InterfacesRepos;
 using ServiceSphere.Infrastructure.Repositories;
+using ServiceSphere.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,13 +1,17 @@
-﻿<!-- ServiceSphere.Web/Views/Supplier/Index.cshtml -->
-@model IEnumerable<ServiceSphere.Domain.Entities.Supplier>
+﻿@model IEnumerable<ServiceSphere.Infrastructure.Models.SupplierModel>
 
 <h1>Suppliers</h1>
-<a asp-action="Create">Create Supplier</a>
-<table>
+
+<p>
+    <a asp-controller="Suppliers" asp-action="Create" class="btn btn-primary">Create New Supplier</a>
+</p>
+
+<table class="table">
     <thead>
         <tr>
             <th>Name</th>
             <th>Contact</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -17,11 +21,16 @@
                 <td>@supplier.Name</td>
                 <td>@supplier.Contact</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@supplier.SupplierId">Details</a>
-                    <a asp-action="Edit" asp-route-id="@supplier.SupplierId">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@supplier.SupplierId">Delete</a>
+                    <a asp-controller="Suppliers" asp-action="Edit" asp-route-id="@supplier.SupplierId" class="btn btn-warning">Edit</a>
+                    <a asp-controller="Suppliers" asp-action="Delete" asp-route-id="@supplier.SupplierId" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this supplier?');">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

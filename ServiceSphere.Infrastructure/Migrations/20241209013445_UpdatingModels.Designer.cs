@@ -12,8 +12,8 @@ using ServiceSphere.Infrastructure.Context;
 namespace ServiceSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(ServiceSphereDbContext))]
-    [Migration("20241208233836_FixedModels")]
-    partial class FixedModels
+    [Migration("20241209013445_UpdatingModels")]
+    partial class UpdatingModels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,7 +72,7 @@ namespace ServiceSphere.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("EventId")
+                    b.Property<int?>("EventId")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsAttending")
@@ -125,11 +125,19 @@ namespace ServiceSphere.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("EventId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("SupplierId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("ServiceId");
+
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("Services");
                 });
@@ -153,21 +161,6 @@ namespace ServiceSphere.Infrastructure.Migrations
                     b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("ServiceSupplier", b =>
-                {
-                    b.Property<int>("ServicesServiceId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SuppliersSupplierId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ServicesServiceId", "SuppliersSupplierId");
-
-                    b.HasIndex("SuppliersSupplierId");
-
-                    b.ToTable("ServiceSupplier");
-                });
-
             modelBuilder.Entity("EventService", b =>
                 {
                     b.HasOne("ServiceSphere.Domain.Entities.Event", null)
@@ -188,7 +181,7 @@ namespace ServiceSphere.Infrastructure.Migrations
                     b.HasOne("ServiceSphere.Domain.Entities.Organizer", "Organizer")
                         .WithMany("Events")
                         .HasForeignKey("OrganizerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("Organizer");
@@ -199,25 +192,19 @@ namespace ServiceSphere.Infrastructure.Migrations
                     b.HasOne("ServiceSphere.Domain.Entities.Event", "Event")
                         .WithMany("Guests")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Event");
                 });
 
-            modelBuilder.Entity("ServiceSupplier", b =>
+            modelBuilder.Entity("ServiceSphere.Domain.Entities.Service", b =>
                 {
-                    b.HasOne("ServiceSphere.Domain.Entities.Service", null)
-                        .WithMany()
-                        .HasForeignKey("ServicesServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("ServiceSphere.Domain.Entities.Supplier", "Supplier")
+                        .WithMany("Services")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("ServiceSphere.Domain.Entities.Supplier", null)
-                        .WithMany()
-                        .HasForeignKey("SuppliersSupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("ServiceSphere.Domain.Entities.Event", b =>
@@ -228,6 +215,11 @@ namespace ServiceSphere.Infrastructure.Migrations
             modelBuilder.Entity("ServiceSphere.Domain.Entities.Organizer", b =>
                 {
                     b.Navigation("Events");
+                });
+
+            modelBuilder.Entity("ServiceSphere.Domain.Entities.Supplier", b =>
+                {
+                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }

@@ -20,26 +20,22 @@ namespace ServiceSphere.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var suppliers = await _supplierService.GetAllSuppliersAsync();
-            return View(suppliers);
-        }
 
-        // GET: Suppliers/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null) return NotFound();
-            var supplierItem = await _supplierService.GetSupplierByIdAsync(id.Value);
-            if (supplierItem == null) return NotFound("Supplier not found.");
-            return View(supplierItem);
+            // Convertir los proveedores a SupplierModel
+            var supplierModels = suppliers.Select(supplier => new SupplierModel
+            {
+                SupplierId = supplier.SupplierId,
+                Name = supplier.Name,
+                Contact = supplier.Contact
+            }).ToList();
+
+            return View(supplierModels); // Pasar SupplierModel en lugar de Supplier
         }
 
         // GET: Suppliers/Create
         public IActionResult Create()
         {
-            var supplierModel = new SupplierModel
-            {
-                // Aquí colocas los valores necesarios, como se requiera.
-            };
-            return View(supplierModel);
+            return View();
         }
 
         [HttpPost]
@@ -96,6 +92,12 @@ namespace ServiceSphere.Web.Controllers
             if (id == null) return NotFound();
             var supplierItem = await _supplierService.GetSupplierByIdAsync(id.Value);
             if (supplierItem == null) return NotFound("Supplier not found.");
+            var supplierModel = new SupplierModel
+            {
+                SupplierId = supplierItem.SupplierId,
+                Name = supplierItem.Name,
+                Contact = supplierItem.Contact
+            };
             return View(supplierItem);
         }
 

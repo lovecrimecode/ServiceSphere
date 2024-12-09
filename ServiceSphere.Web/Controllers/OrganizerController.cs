@@ -4,7 +4,7 @@ using System.Threading.Tasks;//
 using ServiceSphere.Domain.Entities;
 using ServiceSphere.Application.Services;
 using ServiceSphere.Domain;
-using ServiceSphere.Infrastructure.Persistence.Context;
+using ServiceSphere.Infrastructure.Context;
 using ServiceSphere.Infrastructure.Models;
 
 namespace ServiceSphere.Web.Controllers
@@ -22,28 +22,27 @@ namespace ServiceSphere.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var organizers = await _organizerService.GetAllOrganizersAsync();
-            return View(organizers); // Retorna la lista de organizadores.
+
+            // Convertir los organizadores a OrganizerModel
+            var organizerModels = organizers.Select(organizer => new OrganizerModel
+            {
+                OrganizerId = organizer.OrganizerId,
+                Name = organizer.Name,
+                Email = organizer.Email,
+                Phone = organizer.Phone
+            }).ToList();
+
+            return View(organizerModels); // Pasar OrganizerModel en lugar de Organizer
         }
 
-        // GET: Organizers/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var organizerItem = await _organizerService.GetOrganizerByIdAsync(id.Value);
-            if (organizerItem == null) return NotFound("Organizer not found."); // Retorna 404 si no se encuentra.
-
-            return View(organizerItem); // Retorna el organizador encontrado.
-        }
-
-        // GET: Organizers/Create
+         // GET: Organizers/Create
         public IActionResult Create()
         {
             return View(); // Retorna la vista para crear un nuevo organizador.
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Organizer organizerModel)
+        public async Task<ActionResult> Create(OrganizerModel organizerModel)
         {
             if (ModelState.IsValid)
             {
@@ -101,8 +100,14 @@ namespace ServiceSphere.Web.Controllers
                 var organizerItem = await _organizerService.GetOrganizerByIdAsync(id.Value);
 
                 if (organizerItem == null) return NotFound("Organizer not found.");
-
-                return View(organizerItem); // Retorna la vista de confirmación para eliminar el organizador.
+            var organizerModel = new OrganizerModel
+            {
+                OrganizerId = organizerItem.OrganizerId,
+                Name = organizerItem.Name,
+                Phone = organizerItem.Phone,
+                Email = organizerItem.Email
+            };
+            return View(organizerItem); // Retorna la vista de confirmación para eliminar el organizador.
         }
 
         [HttpPost, ActionName("Delete")]

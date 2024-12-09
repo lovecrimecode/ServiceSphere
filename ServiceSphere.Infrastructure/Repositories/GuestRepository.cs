@@ -1,7 +1,7 @@
 ﻿using ServiceSphere.Domain.Entities;
 using ServiceSphere.Domain.InterfacesRepos;
+using ServiceSphere.Infrastructure.Context;
 using ServiceSphere.Infrastructure.Core;
-using ServiceSphere.Infrastructure.Persistence.Context;
 
 namespace ServiceSphere.Infrastructure.Repositories
 {

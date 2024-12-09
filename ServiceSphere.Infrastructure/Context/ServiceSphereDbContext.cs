@@ -9,7 +9,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceSphere.Infrastructure.Persistence.Context
+namespace ServiceSphere.Infrastructure.Context
 {
     public class ServiceSphereDbContext : DbContext
     {

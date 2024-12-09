@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;//
 using Microsoft.EntityFrameworkCore;
 using ServiceSphere.Domain.Core;
-using ServiceSphere.Infrastructure.Persistence.Context;
+using ServiceSphere.Infrastructure.Context;
 using ServiceSphere.Infrastructure.Repositories;
 using ServiceSphere.Infrastructure.Core;
 using ServiceSphere.Domain.InterfacesRepos;
