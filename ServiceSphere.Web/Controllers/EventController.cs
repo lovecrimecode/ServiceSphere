@@ -31,17 +31,6 @@ namespace ServiceSphere.Web.Controllers
             return View(events); // Retorna la vista con la lista de eventos
         }
 
-        // GET: Events/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var eventItem = await _eventService.GetEventByIdAsync(id.Value);
-            if (eventItem == null) return NotFound("Event not found.");
-
-            return View(eventItem); // Retorna la vista de detalles del evento
-        }
-
         // GET: Events/Create
         public async Task<IActionResult> Create()
         {

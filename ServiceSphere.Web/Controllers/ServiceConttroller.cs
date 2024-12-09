@@ -33,15 +33,6 @@ namespace ServiceSphere.Web.Controllers
             return View(serviceModels); // Pasar ServiceModel en lugar de Service
         }
 
-        // GET: Services/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null) return NotFound();
-            var serviceItem = await _serviceService.GetServiceByIdAsync(id.Value);
-            if (serviceItem == null) return NotFound("Service not found.");
-            return View(serviceItem);
-        }
-
         // GET: Services/Create
         public IActionResult Create()
         {

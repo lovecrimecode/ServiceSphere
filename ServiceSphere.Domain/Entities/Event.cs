@@ -21,9 +21,9 @@ namespace ServiceSphere.Domain.Entities
 
 
         // Relationships
-        public int OrganizerId { get; set; }
-        public Organizer Organizer { get; set; }
-        public ICollection<Guest> Guests { get; set; }
-        public ICollection<Service> Services { get; set; }
+        public int? OrganizerId { get; set; }
+        public Organizer? Organizer { get; set; }
+        public ICollection<Guest>? Guests { get; set; }
+        public ICollection<Service>? Services { get; set; }
     }
 }
