@@ -1,0 +1,23 @@
+﻿@model ServiceSphere.Domain.Entities.Organizer
+
+<h1>Edit Organizer</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="OrganizerId" />
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="Email"></label>
+        <textarea asp-for="Email"></textarea>
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <label asp-for="Phone"></label>
+        <textarea asp-for="Phone"></textarea>
+        <span asp-validation-for="Phone"></span>
+    </div>
+    <button type="submit">Update</button>
+</form>

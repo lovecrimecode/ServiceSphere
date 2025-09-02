@@ -1,8 +1,51 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Options";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .menu-button {
+            margin: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <div class="row">
+            <div class="col-md-4 menu-button">
+                <a href="@Url.Action("Index", "Events")" class="btn btn-primary btn-lg btn-block">Manage Events</a>
+            </div>
+            <div class="col-md-4 menu-button">
+                <a href="@Url.Action("Index", "Guests")" class="btn btn-secondary btn-lg btn-block">Manage Guests</a>
+            </div>
+            <div class="col-md-4 menu-button">
+                <a href="@Url.Action("Index", "Services")" class="btn btn-warning btn-lg btn-block">Manage Services</a>
+            </div>
+            <div class="col-md-4 menu-button">
+                <a href="@Url.Action("Index", "Suppliers")" class="btn btn-info btn-lg btn-block">Manage Suppliers</a>
+            </div>
+            <div class="col-md-4 menu-button">
+                <a href="@Url.Action("Index", "Organizers")" class="btn btn-success btn-lg btn-block">Manage Organizers</a>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>

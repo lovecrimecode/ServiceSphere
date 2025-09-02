@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ServiceSphere.Infrastructure.Models.SupplierModel>
+
+<h1>Suppliers</h1>
+
+<p>
+    <a asp-controller="Suppliers" asp-action="Create" class="btn btn-primary">Create New Supplier</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var supplier in Model)
+        {
+            <tr>
+                <td>@supplier.Name</td>
+                <td>@supplier.Contact</td>
+                <td>
+                    <a asp-controller="Suppliers" asp-action="Edit" asp-route-id="@supplier.SupplierId" class="btn btn-warning">Edit</a>
+                    <a asp-controller="Suppliers" asp-action="Delete" asp-route-id="@supplier.SupplierId" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this supplier?');">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

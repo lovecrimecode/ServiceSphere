@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ServiceSphere.Domain.Entities.Guest>
+
+<h1>Guests</h1>
+<p><a asp-controller="Guests" asp-action="Create" class="btn btn-primary">Create Guest</a></p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>IsAttending</th>
+        </tr>
+    </thead>
+    <tbodyguest @foreach (var guest in Model)
+        {
+            <tr>
+                <td>@guest.Name</td>
+                <td>@guest.IsAttending</td>
+                <td>@guest.EventName</td> <!-- Columna para mostrar el nombre del evento -->
+                <th>Actions</th>
+                <td>
+                        <a asp-controller="Guests" asp-action="Edit" asp-route-id="@guest.GuestId" class="btn btn-warning">Edit</a>
+                        <a asp-controller="Guests" asp-action="Delete" asp-route-id="@guest.GuestId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

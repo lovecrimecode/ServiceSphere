@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ServiceSphere.Infrastructure.Models.OrganizerModel>
+
+<h1>Organizers</h1>
+
+<p>
+    <a asp-controller="Organizers" asp-action="Create" class="btn btn-primary">Create New Organizer</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var organizer in Model)
+        {
+            <tr>
+                <td>@organizer.Name</td>
+                <td>@organizer.Email</td>
+                <td>@organizer.Phone</td>
+                <td>
+                    <a asp-controller="Organizers" asp-action="Edit" asp-route-id="@organizer.OrganizerId" class="btn btn-warning">Edit</a>
+                    <a asp-controller="Organizers" asp-action="Delete" asp-route-id="@organizer.OrganizerId" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this organizer?');">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

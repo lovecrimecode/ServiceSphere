@@ -1,0 +1,24 @@
+﻿@model ServiceSphere.Infrastructure.Models.ServiceModel
+
+<h1>Edit Service</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="ServiceId" />
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="Cost"></label>
+        <textarea asp-for="Cost"></textarea>
+        <span asp-validation-for="Cost"></span>
+    </div>
+    <div>
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description"></textarea>
+        <span asp-validation-for="Description"></span>
+    </div>
+
+    <button type="submit">Update</button>
+</form>
