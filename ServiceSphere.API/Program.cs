@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Identity;//
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;//
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;//
+using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using ServiceSphere.Domain.Core;
 using ServiceSphere.Infrastructure.Context;
@@ -45,6 +45,9 @@ builder.Services.AddScoped<ServiceService>();
 builder.Services.AddScoped<SupplierService>();
 builder.Services.AddScoped<OrganizerService>();
 //builder.Services.AddTransient(typeof(IService<>), typeof(BaseService<>));
+
+builder.Services.AddDbContext<ServiceSphereDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
